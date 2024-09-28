@@ -5,10 +5,11 @@ import GameStart from "@/components/gamePlay/GameStart";
 import SingleWhole from "@/components/gamePlay/SingleWhole";
 import Footer from "@/components/root/Footer";
 import Header from "@/components/root/Header";
-import settings, { Level } from "@/data/settings";
+import settings from "@/data/settings";
 import { generateRandom } from "@/lib/utils";
+import useTapStore from "@/store";
 import { StaticImageData } from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type PositionType = {
   id: string;
@@ -18,55 +19,55 @@ export type PositionType = {
   };
 };
 
-const initialTarget = generateRandom(1, 9);
-
-const clientPositions: PositionType[] = [];
-
-const generateGame = () => {
-  for (let i = 0; i < settings?.gameDuration / 1000; i++) {
-    clientPositions.push({
-      id: `whole${generateRandom(1, 9)}`,
-      client: settings?.clientProperties[generateRandom(0, 3)],
-    });
-  }
-
-  console.log(clientPositions);
-};
-
-generateGame();
-
 export default function Home() {
-  const [gameStarted, setGameStarted] = useState(false);
+  const { gameStarted, setTapCount, tapCount, currentLevel } = useTapStore(
+    (state) => state
+  );
+  const initialTarget = generateRandom(1, 9);
   const [targetWhole, setTargetWhole] = useState(initialTarget);
-  const [totalScore, setTotalScore] = useState(0);
-  const [currentLevel, setCurrentLevel] = useState<Level>("level1");
+  const [clientPositions, setClientPositions] = useState<PositionType[]>([]);
+
+  const generateGame = () => {
+    let temp = [];
+    for (let i = 0; i < settings?.levels[currentLevel]?.totalClient; i++) {
+      temp.push({
+        id: `whole${generateRandom(1, 9)}`,
+        client: settings?.clientProperties[generateRandom(0, 3)],
+      });
+    }
+    setClientPositions(temp);
+    console.log(temp);
+  };
+
+  useEffect(() => {
+    generateGame();
+  }, [currentLevel, gameStarted]);
 
   return (
     <>
       <Header />
       <main className="mt-2">
         <div className="container">
-          <GameReport totalScore={totalScore} currentLevel={currentLevel} />
+          <GameReport />
           {/* <p>Position: {targetWhole}</p> */}
           <div className="block game-board">
-            <GameStart
-              gameStarted={gameStarted}
-              setGameStarted={setGameStarted}
-              setTargetWhole={setTargetWhole}
-            />
+            <GameStart setTargetWhole={setTargetWhole} />
             {[...Array(9)].map((_, index) => (
-              <div key={index} className="whole" id={"whole" + (index + 1)}>
+              <div
+                key={index}
+                className="whole"
+                id={"whole" + (index + 1)}
+                onClick={() => {
+                  setTapCount(1, targetWhole === index + 1 ? 1 : 0);
+                }}
+              >
                 {gameStarted && (
                   <SingleWhole
                     wholeID={"whole" + (index + 1)}
                     clientWhole={clientPositions[index]}
                     targetWhole={"whole" + targetWhole}
-                    setTotalScore={setTotalScore}
                     clientPositions={clientPositions}
                     index={index}
-                    currentLevel={currentLevel}
-                    setCurrentLevel={setCurrentLevel}
-                    setGameStarted={setGameStarted}
                   />
                 )}
               </div>

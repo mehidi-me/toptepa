@@ -1,19 +1,17 @@
 "use client";
 import settings from "@/data/settings";
 import { generateRandom } from "@/lib/utils";
+import useTapStore from "@/store";
 import { useEffect, useState } from "react";
 
 type Props = {
-  gameStarted: boolean;
-  setGameStarted: React.Dispatch<React.SetStateAction<boolean>>;
   setTargetWhole: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function GameStart({
-  gameStarted,
-  setGameStarted,
-  setTargetWhole,
-}: Props) {
+export default function GameStart({ setTargetWhole }: Props) {
+  const gameStarted = useTapStore((state) => state.gameStarted);
+  const setGameStarted = useTapStore((state) => state.setGameStarted);
+
   const [countDownStarted, setCountDownStarted] = useState(false);
   const [gameCountDown, setGameCountDown] = useState(
     settings.countDownDuration / 1000
@@ -29,7 +27,6 @@ export default function GameStart({
     if (!gameStarted) {
       setTimeout(() => {
         setCountDownStarted(false);
-        console.log("Game Started");
         clearInterval(gameCount);
         setGameStarted(true);
       }, settings.countDownDuration);
@@ -39,8 +36,17 @@ export default function GameStart({
   useEffect(() => {
     let gameOver: NodeJS.Timeout;
     if (gameStarted) {
+      let lastTarget = 0;
       const gameCount = setInterval(() => {
-        setTargetWhole(generateRandom(1, 9));
+        let target = generateRandom(1, 9);
+
+        while (target == lastTarget) {
+          target = generateRandom(1, 9);
+        }
+
+        lastTarget = target;
+        setTargetWhole(target);
+        console.log(target);
       }, 2000);
 
       gameOver = setTimeout(() => {

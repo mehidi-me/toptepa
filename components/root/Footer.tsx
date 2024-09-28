@@ -1,4 +1,10 @@
-import * as Unicons from "@iconscout/react-unicons";
+import {
+  BellIcon,
+  ClipboardIcon,
+  InfoIcon,
+  ListIcon,
+  UserIcon,
+} from "lucide-react";
 import Link from "next/link";
 
 type Props = {};
@@ -9,32 +15,32 @@ export default function Footer({}: Props) {
       <div className="container">
         <Link href={"/level"}>
           <div className="ico">
-            <Unicons.UilInfoCircle />
+            <InfoIcon />
           </div>
         </Link>
         <Link href={"/leaderboard"}>
           <div className="ico">
             {/* <i className="uil uil-list-ol-alt" /> */}
-            <Unicons.UilListOlAlt />
+            <ListIcon />
           </div>
         </Link>
         <Link href={"/"}>
           <div className="ico order">
             {/* <i className="uil uil-clipboard-notes" /> */}
-            <Unicons.UilClipboardNotes />
+            <ClipboardIcon />
           </div>
         </Link>
         <Link href={"/notifications"}>
           <div className="ico">
             {/* <i className="uil uil-bell" /> */}
-            <Unicons.UilBell />
+            <BellIcon />
             <div className="alert" />
           </div>
         </Link>
         <Link href={"/profile"}>
           <div className="ico">
             {/* <i className="uil uil-user" /> */}
-            <Unicons.UilUser />
+            <UserIcon />
           </div>
         </Link>
       </div>

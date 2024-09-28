@@ -1,6 +1,7 @@
-type Props = {};
+import Image from "next/image";
+import userImage from "@/public/images/user.png";
 
-export default function Header({}: Props) {
+export default function Header({}) {
   return (
     <header>
       <div className="container">
@@ -11,7 +12,7 @@ export default function Header({}: Props) {
           <h1>Welcome back</h1>
         </div>
         <div className="profile-pic">
-          <img src="images/user.png" alt="" />
+          <Image src={userImage} alt="" className="w-full h-full" />
         </div>
       </div>
     </header>

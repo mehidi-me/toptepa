@@ -1,5 +1,7 @@
 import Footer from "@/components/root/Footer";
 import "@/app/css/level.css";
+import Image from "next/image";
+import newImage from "@/public/images/new.svg";
 
 type Props = {};
 
@@ -9,24 +11,24 @@ export default function page({}: Props) {
       <main>
         <div className="container">
           <div className="current-level-badge">
-            <img src="images/new.svg" alt="" />
+            <Image src={newImage} alt="" className="w-full h-full" />
             <p>Newby</p>
           </div>
           <div className="level-flow">
             <div className="level active">
-              <img src="images/new.svg" alt="" />
+              <Image src={newImage} alt="" className="w-full h-full" />
               <p>Newby</p>
             </div>
             <div className="level">
-              <img src="images/tepa.svg" alt="" />
+              <Image src={newImage} alt="" className="w-full h-full" />
               <p>Tepa</p>
             </div>
             <div className="level">
-              <img src="images/tepaking.svg" alt="" />
+              <Image src={newImage} alt="" className="w-full h-full" />
               <p>Tepa King</p>
             </div>
             <div className="level">
-              <img src="images/top.svg" alt="" />
+              <Image src={newImage} alt="" className="w-full h-full" />
               <p>Top Tepa</p>
             </div>
           </div>

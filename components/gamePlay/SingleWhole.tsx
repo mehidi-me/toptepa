@@ -1,7 +1,9 @@
 import { PositionType } from "@/app/page";
-import settings, { Level } from "@/data/settings";
+import settings from "@/data/settings";
 import { debounce } from "@/lib/utils";
+import useTapStore from "@/store";
 import Image, { StaticImageData } from "next/image";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 type Props = {
@@ -14,40 +16,55 @@ type Props = {
     };
   };
   targetWhole: string;
-  setTotalScore: React.Dispatch<React.SetStateAction<number>>;
   clientPositions: PositionType[];
   index: number;
-  currentLevel: Level;
-  setCurrentLevel: React.Dispatch<React.SetStateAction<Level>>;
-  setGameStarted: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function SingleWhole({
   wholeID,
   clientWhole,
   targetWhole,
-  setTotalScore,
   clientPositions,
   index,
-  currentLevel,
-  setCurrentLevel,
-  setGameStarted,
 }: Props) {
+  const router = useRouter();
+  const { currentLevel, setCurrentLevel, setTotalScore, totalScore, tapCount } =
+    useTapStore((state) => state);
+
+  const levelUp = () => {
+    const level = settings?.levels?.[currentLevel];
+    const currentTap = Math.round(
+      (tapCount.correctTap / (tapCount.totalTap || 1)) * 100
+    );
+
+    console.log(
+      `Level: ${currentLevel} | Score: ${totalScore} | Tap: ${currentTap}%`
+    );
+    console.log(
+      `Next Level: ${level?.nextLevel} | Score: ${level?.nextLevelScore} | Tap: ${level?.nextLevelTap}%`
+    );
+    console.log(tapCount);
+
+    if (
+      totalScore >= level.nextLevelScore &&
+      currentTap >= level.nextLevelTap &&
+      currentLevel !== "level4"
+    ) {
+      setCurrentLevel(
+        settings?.levels?.[currentLevel]?.nextLevel || currentLevel
+      );
+      router.refresh();
+    }
+  };
+
   const makeScore = useCallback(
     debounce((index: number) => {
-      setTotalScore((prev) => {
-        const nextScore = prev + clientPositions[index].client.score;
-        if (
-          nextScore >= settings?.levels?.[currentLevel]?.nextLevelScore &&
-          currentLevel !== "level4"
-        ) {
-          setCurrentLevel(
-            settings?.levels?.[currentLevel]?.nextLevel || currentLevel
-          );
-          setGameStarted(false);
-        }
-        return nextScore;
-      });
+      const scoreToAdd = clientPositions[index].client.score;
+
+      setTotalScore(scoreToAdd);
+
+      console.log(`Client Score: ${totalScore}`);
+      // levelUp();
     }, 300),
     [clientPositions]
   );

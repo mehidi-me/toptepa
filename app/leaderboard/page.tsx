@@ -1,5 +1,7 @@
 import Footer from "@/components/root/Footer";
 import "@/app/css/leaderboard.css";
+import Image from "next/image";
+import userImage from "@/public/images/user.png";
 
 type Props = {};
 
@@ -21,7 +23,7 @@ export default function page({}: Props) {
                   <td>1.</td>
                   <td className="user">
                     <div className="profile-pic">
-                      <img src="images/user.png" alt="" />
+                      <Image src={userImage} alt="" className="w-full h-full" />
                     </div>{" "}
                     Mehidi Hsan
                   </td>
@@ -32,7 +34,7 @@ export default function page({}: Props) {
                   <td>2.</td>
                   <td className="user">
                     <div className="profile-pic">
-                      <img src="images/user.png" alt="" />
+                      <Image src={userImage} alt="" className="w-full h-full" />
                     </div>{" "}
                     Mehidi Hsan
                   </td>
@@ -43,7 +45,7 @@ export default function page({}: Props) {
                   <td>3.</td>
                   <td className="user">
                     <div className="profile-pic">
-                      <img src="images/user.png" alt="" />
+                      <Image src={userImage} alt="" className="w-full h-full" />
                     </div>{" "}
                     Mehidi Hsan
                   </td>
@@ -54,7 +56,7 @@ export default function page({}: Props) {
                   <td>4.</td>
                   <td className="user">
                     <div className="profile-pic">
-                      <img src="images/user.png" alt="" />
+                      <Image src={userImage} alt="" className="w-full h-full" />
                     </div>{" "}
                     Mehidi Hsan
                   </td>
@@ -65,7 +67,7 @@ export default function page({}: Props) {
                   <td>5.</td>
                   <td className="user">
                     <div className="profile-pic">
-                      <img src="images/user.png" alt="" />
+                      <Image src={userImage} alt="" className="w-full h-full" />
                     </div>{" "}
                     Mehidi Hsan
                   </td>

@@ -1,5 +1,7 @@
 import Footer from "@/components/root/Footer";
 import "@/app/css/profile.css";
+import Image from "next/image";
+import userImage from "@/public/images/user.png";
 
 type Props = {};
 
@@ -13,7 +15,7 @@ export default function page({}: Props) {
             <div className="block">
               <div className="profile-input">
                 <label className="profile-pic" htmlFor="pic-up">
-                  <img src="images/user.png" alt="" />
+                  <Image src={userImage} alt="" className="w-full h-full" />
                   <i className="uil uil-camera-plus" />
                 </label>
                 <input type="file" id="pic-up" />
