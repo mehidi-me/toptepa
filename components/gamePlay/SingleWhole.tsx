@@ -4,7 +4,7 @@ import { debounce } from "@/lib/utils";
 import useTapStore from "@/store";
 import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 type Props = {
   wholeID: string;
@@ -30,6 +30,8 @@ export default function SingleWhole({
   const router = useRouter();
   const { currentLevel, setCurrentLevel, setTotalScore, totalScore, tapCount } =
     useTapStore((state) => state);
+
+  const [clicked, setClicked] = useState(false);
 
   const levelUp = () => {
     const level = settings?.levels?.[currentLevel];
@@ -80,13 +82,25 @@ export default function SingleWhole({
           }}
         >
           <Image
-            onClick={() => makeScore(index)}
+            onClick={() => {
+              setClicked(true);
+              makeScore(index);
+            }}
             src={clientWhole?.client?.image}
             alt="Client Image"
             className="w-full h-full"
           />
         </div>
-        <p>{clientWhole?.client?.score} Orders</p>
+        {clicked && (
+          <p
+            style={{
+              animationDuration:
+                settings?.levels?.level1?.clientDuration / 1000 + "s",
+            }}
+          >
+            {clientWhole?.client?.score} Orders
+          </p>
+        )}
       </>
     )
   );
