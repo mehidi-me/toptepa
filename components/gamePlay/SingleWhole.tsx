@@ -66,6 +66,8 @@ export default function SingleWhole({
       setTotalScore(scoreToAdd);
 
       console.log(`Client Score: ${totalScore}`);
+
+      setClicked(false);
       // levelUp();
     }, 300),
     [clientPositions]
