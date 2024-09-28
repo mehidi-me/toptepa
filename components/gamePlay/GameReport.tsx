@@ -1,16 +1,21 @@
+import settings from "@/data/settings";
+import Image from "next/image";
+
 type Props = {
   totalScore: number;
+  currentLevel: "level1" | "level2" | "level3" | "level4";
 };
 
-export default function GameReport({ totalScore }: Props) {
+export default function GameReport({ totalScore, currentLevel }: Props) {
+  const level = settings?.levels?.[currentLevel];
   return (
     <div className="block report">
       <div className="card">
         <p>Your Level</p>
         <div className="lavel">
-          <img src="images/new.svg" alt="" />
+          <Image src={level?.icon} alt="Level" />
         </div>
-        <h3>Newby</h3>
+        <h3>{level?.label}</h3>
       </div>
       <div className="card">
         <p>Leaderboard</p>

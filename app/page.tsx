@@ -5,7 +5,7 @@ import GameStart from "@/components/gamePlay/GameStart";
 import SingleWhole from "@/components/gamePlay/SingleWhole";
 import Footer from "@/components/root/Footer";
 import Header from "@/components/root/Header";
-import settings from "@/data/settings";
+import settings, { Level } from "@/data/settings";
 import { generateRandom } from "@/lib/utils";
 import { StaticImageData } from "next/image";
 import { useState } from "react";
@@ -39,14 +39,15 @@ export default function Home() {
   const [gameStarted, setGameStarted] = useState(false);
   const [targetWhole, setTargetWhole] = useState(initialTarget);
   const [totalScore, setTotalScore] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState<Level>("level1");
 
   return (
     <>
       <Header />
       <main className="mt-2">
         <div className="container">
-          <GameReport totalScore={totalScore} />
-          <p>Position: {targetWhole}</p>
+          <GameReport totalScore={totalScore} currentLevel={currentLevel} />
+          {/* <p>Position: {targetWhole}</p> */}
           <div className="block game-board">
             <GameStart
               gameStarted={gameStarted}
@@ -63,6 +64,9 @@ export default function Home() {
                     setTotalScore={setTotalScore}
                     clientPositions={clientPositions}
                     index={index}
+                    currentLevel={currentLevel}
+                    setCurrentLevel={setCurrentLevel}
+                    setGameStarted={setGameStarted}
                   />
                 )}
               </div>

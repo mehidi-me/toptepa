@@ -1,6 +1,8 @@
 import { PositionType } from "@/app/page";
-import settings from "@/data/settings";
+import settings, { Level } from "@/data/settings";
+import { debounce } from "@/lib/utils";
 import Image, { StaticImageData } from "next/image";
+import { useCallback } from "react";
 
 type Props = {
   wholeID: string;
@@ -15,6 +17,9 @@ type Props = {
   setTotalScore: React.Dispatch<React.SetStateAction<number>>;
   clientPositions: PositionType[];
   index: number;
+  currentLevel: Level;
+  setCurrentLevel: React.Dispatch<React.SetStateAction<Level>>;
+  setGameStarted: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function SingleWhole({
@@ -24,10 +29,28 @@ export default function SingleWhole({
   setTotalScore,
   clientPositions,
   index,
+  currentLevel,
+  setCurrentLevel,
+  setGameStarted,
 }: Props) {
-  const makeScore = () => {
-    setTotalScore((prev) => prev + clientPositions[index].client.score);
-  };
+  const makeScore = useCallback(
+    debounce((index: number) => {
+      setTotalScore((prev) => {
+        const nextScore = prev + clientPositions[index].client.score;
+        if (
+          nextScore >= settings?.levels?.[currentLevel]?.nextLevelScore &&
+          currentLevel !== "level4"
+        ) {
+          setCurrentLevel(
+            settings?.levels?.[currentLevel]?.nextLevel || currentLevel
+          );
+          setGameStarted(false);
+        }
+        return nextScore;
+      });
+    }, 300),
+    [clientPositions]
+  );
 
   return (
     wholeID === targetWhole && (
@@ -38,9 +61,9 @@ export default function SingleWhole({
             animationDuration:
               settings?.levels?.level1?.clientDuration / 1000 + "s",
           }}
-          onClick={makeScore}
         >
           <Image
+            onClick={() => makeScore(index)}
             src={clientWhole?.client?.image}
             alt="Client Image"
             className="w-full h-full"
