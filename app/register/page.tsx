@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import "@/public/css/profile.css";
 import "@/public/css/form.css";
 import { useRouter } from "next/navigation";
 
