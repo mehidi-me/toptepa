@@ -1,5 +1,5 @@
 import Footer from "@/components/root/Footer";
-import "@/app/css/notification.css";
+import "@/public/css/notification.css";
 
 type Props = {};
 

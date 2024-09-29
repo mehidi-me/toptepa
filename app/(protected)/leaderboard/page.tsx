@@ -1,5 +1,5 @@
 import Footer from "@/components/root/Footer";
-import "@/app/css/leaderboard.css";
+import "@/public/css/leaderboard.css";
 import Image from "next/image";
 import userImage from "@/public/images/user.png";
 

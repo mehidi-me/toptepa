@@ -1,4 +1,4 @@
-import { PositionType } from "@/app/page";
+import { PositionType } from "@/app/(protected)/page";
 import settings from "@/data/settings";
 import { debounce } from "@/lib/utils";
 import useTapStore from "@/store";

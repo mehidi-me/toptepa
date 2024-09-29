@@ -1,5 +1,5 @@
 import Footer from "@/components/root/Footer";
-import "@/app/css/level.css";
+import "@/public/css/level.css";
 import Image from "next/image";
 import newImage from "@/public/images/new.svg";
 
