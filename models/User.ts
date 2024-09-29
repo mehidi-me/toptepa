@@ -14,6 +14,25 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    currentLevel: {
+        type: String,
+        enum: ['level1', 'level2', 'level3', 'level4'],
+        default: 'level1',
+    },
+    totalScore: {
+        type: Number,
+        default: 0,
+    },
+    tapCount: {
+        totalTap: {
+            type: Number,
+            default: 0,
+        },
+        correctTap: {
+            type: Number,
+            default: 0,
+        },
+    },
 }, { timestamps: true });
 
 // Password hashing middleware

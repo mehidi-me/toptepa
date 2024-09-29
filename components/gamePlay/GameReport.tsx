@@ -36,7 +36,15 @@ export default function GameReport() {
         </h2>
         <div className="bar-wraper">
           <div className="progress-bar">
-            <div className="progress" style={{ width: "0%" }} />
+            <div
+              className="progress"
+              style={{
+                width:
+                  Math.round(
+                    (tapCount.correctTap / (tapCount.totalTap || 1)) * 100
+                  ) + "%",
+              }}
+            />
           </div>
         </div>
       </div>

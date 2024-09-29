@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     }
 
     // Generate JWT token
-    const token = await signToken(user._id.toString());
+    const token = await signToken({ id: user._id.toString() });
     const cookie = serialize('auth', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',

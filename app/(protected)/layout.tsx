@@ -1,7 +1,8 @@
 "use client";
 
-import { verifyToken } from "@/lib/jwt";
-import { useRouter } from "next/navigation";
+import useTapStore from "@/store";
+import Image from "next/image";
+import loadingImage from "@/public/images/loading.svg";
 import { useEffect, useState } from "react";
 
 export default function RootLayout({
@@ -9,5 +10,54 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  const [loading, setLoading] = useState(true);
+  const { setData } = useTapStore((state) => state);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch("/auth/profile", {
+          method: "GET",
+        });
+        const data = await res.json();
+        if (data.success) {
+          setData({
+            user: {
+              phone: data.user.phone,
+              name: data.user.name,
+            },
+            currentLevel: data.user.currentLevel,
+            totalScore: data.user.totalScore || 0,
+            tapCount: {
+              totalTap: data.user.tapCount.totalTap || 0,
+              correctTap: data.user.tapCount.correctTap || 0,
+            },
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  return (
+    <>
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            height: "100vh",
+            alignItems: "center",
+          }}
+        >
+          <Image src={loadingImage} alt="Loading" width={200} height={200} />
+        </div>
+      ) : (
+        <>{children}</>
+      )}
+    </>
+  );
 }
