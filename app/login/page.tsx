@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import React, { useState } from "react";
 import "@/public/css/form.css";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ export default function page({}: Props) {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const route = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -57,14 +58,20 @@ export default function page({}: Props) {
             </div>
             <div className="fild">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="pass"
                 placeholder=" "
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <label htmlFor="pass">Password</label>
-              <i className="uil uil-eye" />
+              <p onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <i className="uil uil-eye-slash" />
+                ) : (
+                  <i className="uil uil-eye" />
+                )}
+              </p>
             </div>
             <button
               disabled={loading}

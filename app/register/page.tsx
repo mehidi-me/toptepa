@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import React, { useState } from "react";
 import "@/public/css/profile.css";
 import "@/public/css/form.css";
@@ -12,7 +12,9 @@ export default function page({}: Props) {
   const [name, setName] = useState("");
   const [fiverrName, setFiverrName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const route = useRouter();
@@ -99,7 +101,7 @@ export default function page({}: Props) {
             </div>
             <div className="fild">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="pass"
                 placeholder=" "
                 required
@@ -107,11 +109,17 @@ export default function page({}: Props) {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <label htmlFor="pass">Password</label>
-              <i className="uil uil-eye" />
+              <p onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <i className="uil uil-eye-slash" />
+                ) : (
+                  <i className="uil uil-eye" />
+                )}
+              </p>
             </div>
             <div className="fild">
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 id="c-pass"
                 placeholder=" "
                 required
@@ -119,7 +127,13 @@ export default function page({}: Props) {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <label htmlFor="c-pass">Confirm password</label>
-              <i className="uil uil-eye-slash" />
+              <p onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                {showConfirmPassword ? (
+                  <i className="uil uil-eye-slash" />
+                ) : (
+                  <i className="uil uil-eye" />
+                )}
+              </p>
             </div>
             <button
               disabled={loading}
