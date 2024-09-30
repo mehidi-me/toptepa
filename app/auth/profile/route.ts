@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
-import { signToken, verifyToken } from '@/lib/jwt';
-import { serialize } from 'cookie';
+import { verifyToken } from '@/lib/jwt';
 import { cookies } from 'next/headers';
 
 export async function GET(req: Request) {

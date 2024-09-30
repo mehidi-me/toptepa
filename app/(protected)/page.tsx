@@ -37,14 +37,17 @@ const Home = () => {
 
   const initializeClientCounts = (
     totalClient: number,
+    totalClient2: number,
     totalClient3: number
   ) => {
-    const remainingClients = totalClient - totalClient3;
+    const remainingClients = totalClient - totalClient2 - totalClient3;
+
     clientCounts.client1 = Math.max(
       2,
       Math.floor(Math.random() * (remainingClients + 1))
     );
-    clientCounts.client2 = Math.max(2, remainingClients - clientCounts.client1);
+
+    clientCounts.client2 = totalClient2;
     clientCounts.client3 = totalClient3;
 
     console.log("Client Counts", clientCounts);
@@ -53,6 +56,7 @@ const Home = () => {
   const resetClientCounts = () => {
     initializeClientCounts(
       settings?.levels?.[currentLevel]?.totalClient,
+      settings?.levels?.[currentLevel]?.client2Count || 0,
       settings?.levels?.[currentLevel]?.client3Count || 0
     );
   };
