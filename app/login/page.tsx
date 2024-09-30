@@ -1,6 +1,5 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+"use client";;
+import React, { useState } from "react";
 import "@/public/css/form.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -11,9 +10,11 @@ export default function page({}: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const route = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const res = await fetch("/auth/login", {
@@ -32,6 +33,8 @@ export default function page({}: Props) {
       }
     } catch (error) {
       setMessage("An error occurred");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,7 +66,16 @@ export default function page({}: Props) {
               <label htmlFor="pass">Password</label>
               <i className="uil uil-eye" />
             </div>
-            <button type="submit">Start TepaTepi</button>
+            <button
+              disabled={loading}
+              style={{
+                opacity: loading ? 0.5 : 1,
+                cursor: loading ? "wait" : "pointer",
+              }}
+              type="submit"
+            >
+              Start TepaTepi
+            </button>
             {message && (
               <p style={{ color: "#FE0320", marginTop: "0.7rem" }}>{message}</p>
             )}

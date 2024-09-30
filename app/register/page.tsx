@@ -1,5 +1,4 @@
-"use client";
-
+"use client";;
 import React, { useState } from "react";
 import "@/public/css/profile.css";
 import "@/public/css/form.css";
@@ -15,13 +14,16 @@ export default function page({}: Props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const route = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
 
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
+      setLoading(false);
       return;
     }
     try {
@@ -44,6 +46,8 @@ export default function page({}: Props) {
       }
     } catch (error) {
       setMessage("An error occurred");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -117,7 +121,16 @@ export default function page({}: Props) {
               <label htmlFor="c-pass">Confirm password</label>
               <i className="uil uil-eye-slash" />
             </div>
-            <button type="submit">Start TepaTepi</button>
+            <button
+              disabled={loading}
+              style={{
+                opacity: loading ? 0.5 : 1,
+                cursor: loading ? "wait" : "pointer",
+              }}
+              type="submit"
+            >
+              Start TepaTepi
+            </button>
             {message && (
               <p
                 style={{
