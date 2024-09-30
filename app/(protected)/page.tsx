@@ -150,13 +150,6 @@ const Home = () => {
   }, [gameStarted, activeDiv, switchInterval]);
 
   useEffect(() => {
-    if (gameStarted) {
-      const interval = setInterval(switchImage, switchInterval);
-      return () => clearInterval(interval);
-    }
-  }, [gameStarted, activeDiv, switchInterval]);
-
-  useEffect(() => {
     initializeClientCounts();
   }, [gameStarted]);
 
