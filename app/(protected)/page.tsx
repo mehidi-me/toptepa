@@ -16,6 +16,8 @@ export type PositionType = {
   imageSrc: StaticImageData;
 };
 
+let count = 0;
+
 const Home = () => {
   const {
     gameStarted,
@@ -30,7 +32,8 @@ const Home = () => {
   const switchInterval =
     settings?.levels?.[currentLevel]?.clientDuration || 1300;
 
-  const [clicked, setClicked] = useState(-1);
+  const [missTimer, setMissTimer] = useState<NodeJS.Timeout>();
+  const [clicked, setClicked] = useState(-2);
   const [allClients, setAllClients] = useState<PositionType[]>([]);
   const [selectedClients, setSelectedClients] = useState<PositionType[]>([]);
 
@@ -93,15 +96,17 @@ const Home = () => {
     setTapCount(tapAdjustments);
   };
 
-  const handleMissedTap = () => {
-    selectedClients.forEach((client) => {
+  const handleMissedTap = (toCheckClients: PositionType[]) => {
+    toCheckClients.forEach((client) => {
       if (client.clientType === "good") {
+        console.log("Missed Tap ", count);
         setTapCount({ byCorrect: 0, byWrong: 0, byMissed: 1 });
       }
     });
   };
 
   const switchImage = () => {
+    count++;
     setClicked(-1);
     const levelNum = Number(currentLevel.split("level")[1]);
     const clientsToShow = levelNum >= 3 ? 4 : 1;
@@ -126,7 +131,15 @@ const Home = () => {
       initializeClientCounts();
     }
 
-    setSelectedClients(selectRandomClients());
+    const tempClients = selectRandomClients();
+    setSelectedClients(tempClients);
+
+    setMissTimer(
+      setTimeout(() => {
+        handleMissedTap(tempClients);
+      }, switchInterval - 500)
+    );
+
     setActiveDiv(selectedDivIndexes);
   };
 
@@ -138,10 +151,11 @@ const Home = () => {
   }, [gameStarted, activeDiv, switchInterval]);
 
   useEffect(() => {
-    if (activeDiv.length > 0) {
-      setTimeout(handleMissedTap, switchInterval - 500);
+    if (gameStarted) {
+      const interval = setInterval(switchImage, switchInterval);
+      return () => clearInterval(interval);
     }
-  }, [activeDiv]);
+  }, [gameStarted, activeDiv, switchInterval]);
 
   useEffect(() => {
     initializeClientCounts();
@@ -170,6 +184,7 @@ const Home = () => {
                 setClicked={setClicked}
                 toActive={activeDiv?.includes(i)}
                 index={i}
+                missTimer={missTimer}
               />
             ))}
           </div>

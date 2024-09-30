@@ -11,6 +11,7 @@ type Props = {
   setClicked: React.Dispatch<React.SetStateAction<number>>;
   clicked: number;
   index: number;
+  missTimer: NodeJS.Timeout | undefined;
 };
 
 export default function SingleWhole({
@@ -20,6 +21,7 @@ export default function SingleWhole({
   setClicked,
   clicked,
   index,
+  missTimer,
 }: Props) {
   const { currentLevel } = useTapStore((state) => state);
 
@@ -30,6 +32,7 @@ export default function SingleWhole({
           <div
             className="anim-img"
             onClick={() => {
+              clearTimeout(missTimer);
               setClicked(index);
               handleTap(selectedClient);
             }}
