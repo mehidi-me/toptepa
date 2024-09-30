@@ -43,7 +43,7 @@ interface TapState {
     currentLevel: "level1" | "level2" | "level3" | "level4";
     setCurrentLevel: (to: "level1" | "level2" | "level3" | "level4") => void
 
-    activeDiv: any,
+    activeDiv: number[],
     setActiveDiv: (to: any) => void,
 
     themeColor: string;
@@ -96,7 +96,7 @@ const useTapStore = create<TapState>()(
                 return ({ currentLevel: to })
             }),
 
-            activeDiv: null,
+            activeDiv: [],
             setActiveDiv: (to) => set((state) => ({ activeDiv: to })),
 
             themeColor: "#1dbf73",

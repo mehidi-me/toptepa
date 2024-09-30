@@ -5,35 +5,37 @@ import useTapStore from "@/store";
 import Image from "next/image";
 
 type Props = {
-  handleTap: () => void;
+  handleTap: (selectedClient: PositionType) => void;
   selectedClient: PositionType;
+  toActive: boolean;
+  setClicked: React.Dispatch<React.SetStateAction<number>>;
+  clicked: number;
   index: number;
-  clicked: boolean;
-  setClicked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function SingleWhole({
   handleTap,
-  index,
   selectedClient,
-  clicked,
+  toActive,
   setClicked,
+  clicked,
+  index,
 }: Props) {
-  const { activeDiv, currentLevel } = useTapStore((state) => state);
+  const { currentLevel } = useTapStore((state) => state);
 
   return (
     <>
-      <div className={`whole ${activeDiv === index ? "active" : ""}`}>
-        {activeDiv === index && (
+      <div className={`whole`}>
+        {toActive && (
           <div
             className="anim-img"
             onClick={() => {
-              setClicked(true);
-              handleTap();
+              setClicked(index);
+              handleTap(selectedClient);
             }}
           >
             <Image src={selectedClient.imageSrc} alt="client" />
-            {clicked && (
+            {clicked == index && (
               <p
                 style={{
                   color:

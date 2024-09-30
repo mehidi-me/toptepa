@@ -1,20 +1,24 @@
 "use client";
+
+import React, { useEffect, useState } from "react";
 import GameReport from "@/components/gamePlay/GameReport";
 import Footer from "@/components/root/Footer";
 import Header from "@/components/root/Header";
 import settings from "@/data/settings";
 import useTapStore from "@/store";
-import React, { useEffect, useState } from "react";
 import SingleWhole from "@/components/gamePlay/SingleWhole";
 import GameStart from "@/components/gamePlay/GameStart";
+import { StaticImageData } from "next/image";
 
 export type PositionType = {
   clientType: string;
   orders: number;
-  imageSrc: string;
+  imageSrc: StaticImageData;
 };
 
-export default function Home() {
+let clientCounts = { client1: 0, client2: 0, client3: 0 };
+
+const Home = () => {
   const {
     gameStarted,
     setTapCount,
@@ -28,25 +32,93 @@ export default function Home() {
   const switchInterval =
     settings?.levels?.[currentLevel]?.clientDuration || 1300;
 
-  const [clicked, setClicked] = useState(false);
-  const [selectedClient, setSelectedClient] = useState<any>();
+  const [clicked, setClicked] = useState(-1);
+  const [selectedClients, setSelectedClients] = useState<PositionType[]>([]);
 
-  const selectRandomClient = () => {
-    const { client1, client2, client3 } = settings?.clientProperties;
-    const rand = Math.random();
-    if (rand < 0.7) {
-      return client1;
-    } else if (rand < 0.8) {
-      return client3;
-    } else {
-      return client2;
-    }
+  const initializeClientCounts = (
+    totalClient: number,
+    totalClient3: number
+  ) => {
+    const remainingClients = totalClient - totalClient3;
+    clientCounts.client1 = Math.max(
+      2,
+      Math.floor(Math.random() * (remainingClients + 1))
+    );
+    clientCounts.client2 = Math.max(2, remainingClients - clientCounts.client1);
+    clientCounts.client3 = totalClient3;
+
+    console.log("Client Counts", clientCounts);
   };
 
-  const handleTap = () => {
+  const resetClientCounts = () => {
+    initializeClientCounts(
+      settings?.levels?.[currentLevel]?.totalClient,
+      settings?.levels?.[currentLevel]?.client3Count || 0
+    );
+  };
+
+  const selectRandomClients = () => {
+    const { client1, client2, client3 } = settings?.clientProperties;
+    const totalRemaining =
+      clientCounts.client1 + clientCounts.client2 + clientCounts.client3;
+
+    if (totalRemaining === 0) {
+      resetClientCounts();
+    }
+
+    let clients: PositionType[] = [];
+
+    // Show multiple clients only for levels 3 and 4
+    if (Number(currentLevel.split("level")[1]) >= 3) {
+      const clientsToShow = 4;
+
+      for (let i = 0; i < clientsToShow; i++) {
+        const rand = Math.random();
+        let selectedClient: PositionType;
+
+        if (rand < clientCounts.client1 / totalRemaining) {
+          selectedClient = client1;
+          clientCounts.client1--;
+        } else if (
+          rand <
+          (clientCounts.client1 + clientCounts.client2) / totalRemaining
+        ) {
+          selectedClient = client2;
+          clientCounts.client2--;
+        } else {
+          selectedClient = client3;
+          clientCounts.client3--;
+        }
+
+        clients.push(selectedClient);
+      }
+    } else {
+      // For levels below 3, only select a single client
+      const rand = Math.random();
+      let selectedClient: PositionType;
+
+      if (rand < clientCounts.client1 / totalRemaining) {
+        selectedClient = client1;
+        clientCounts.client1--;
+      } else if (
+        rand <
+        (clientCounts.client1 + clientCounts.client2) / totalRemaining
+      ) {
+        selectedClient = client2;
+        clientCounts.client2--;
+      } else {
+        selectedClient = client3;
+        clientCounts.client3--;
+      }
+
+      clients.push(selectedClient);
+    }
+
+    return clients;
+  };
+  const handleTap = (selectedClient: PositionType) => {
     if (selectedClient.clientType === "good") {
       setTotalScore(selectedClient.orders);
-
       setTapCount({ byCorrect: 1, byWrong: 0, byMissed: 0 });
     } else {
       setTotalScore(-20);
@@ -54,37 +126,50 @@ export default function Home() {
     }
   };
 
-  const handleMissedTap = (selectedClient: any) => {
-    if (selectedClient.clientType === "good") {
-      setTapCount({ byCorrect: 0, byWrong: 0, byMissed: 1 });
-    }
+  const handleMissedTap = () => {
+    selectedClients.forEach((client) => {
+      if (client.clientType === "good") {
+        setTapCount({
+          byCorrect: 0,
+          byWrong: 0,
+          byMissed: 1,
+        });
+      }
+    });
   };
 
   const switchImage = () => {
-    setClicked(false);
-    if (activeDiv) {
-    }
+    setClicked(-1);
+    const selectedDivIndexes = Array.from(
+      { length: Number(currentLevel.split("level")[1]) >= 3 ? 4 : 1 },
+      () => Math.floor(Math.random() * 6)
+    ); // 2 divs for levels 3 and 4, 1 for others
+    const newClients = selectRandomClients(); // Select multiple clients based on currentLevel
 
-    const selectedDivIndex = Math.floor(Math.random() * 6);
-    const selectedClient = selectRandomClient();
-
-    setSelectedClient(selectedClient);
-
-    setActiveDiv(selectedDivIndex);
+    setSelectedClients(newClients);
+    console.log(newClients);
+    console.log(selectedDivIndexes);
+    setActiveDiv(selectedDivIndexes); // Set active divs
 
     setTimeout(() => {
-      handleMissedTap(selectedClient);
+      handleMissedTap();
       setActiveDiv(null);
     }, switchInterval);
   };
 
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
+    let interval: NodeJS.Timeout | undefined;
+
     if (gameStarted) {
       interval = setInterval(switchImage, switchInterval);
     }
-    return () => clearInterval(interval);
-  }, [gameStarted, activeDiv]);
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [gameStarted, activeDiv, switchInterval]);
 
   return (
     <React.Fragment>
@@ -104,10 +189,11 @@ export default function Home() {
               <SingleWhole
                 key={i}
                 handleTap={handleTap}
-                index={i}
-                selectedClient={selectedClient}
+                selectedClient={selectedClients[activeDiv?.indexOf(i)]}
                 clicked={clicked}
                 setClicked={setClicked}
+                toActive={activeDiv?.includes(i)}
+                index={i}
               />
             ))}
           </div>
@@ -116,4 +202,6 @@ export default function Home() {
       <Footer />
     </React.Fragment>
   );
-}
+};
+
+export default Home;

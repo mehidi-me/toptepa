@@ -1,3 +1,5 @@
+
+
 import Client1 from "@/public/images/client.png";
 import Client2 from "@/public/images/client2.png";
 import Client3 from "@/public/images/client3.png";
@@ -35,6 +37,7 @@ const settings = {
             label: "Newby" as Level,
             icon: Level1,
             totalClient: 25,
+            client3Count: 0,
             clientDuration: 1500,
             nextLevelScore: 40,
             nextLevelTap: 70,
@@ -44,6 +47,7 @@ const settings = {
             label: "Tepa",
             icon: Level2,
             totalClient: 35,
+            client3Count: 0,
             clientDuration: 1300,
             nextLevelScore: 20000,
             nextLevelTap: 80,
@@ -53,6 +57,7 @@ const settings = {
             label: "Tepa King",
             icon: Level3,
             totalClient: 45,
+            client3Count: 7,
             clientDuration: 1200,
             nextLevelScore: 1000000,
             nextLevelTap: 90,
@@ -62,12 +67,12 @@ const settings = {
             label: "Top Tepa",
             icon: Level4,
             totalClient: 55,
+            client3Count: 27,
             clientDuration: 1000,
             nextLevelScore: 300,
             nextLevelTap: 100,
             nextLevel: "level4" as Level,
         }
-
     }
 }
 
