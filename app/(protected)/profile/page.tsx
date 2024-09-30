@@ -22,26 +22,18 @@ export default function page({}: Props) {
     themeColor || "#1dbf73"
   );
 
-  const themeColorChangeHandler = async (color: string) => {
-    if (color.length > 0) {
+  const themeColorChangeHandler = async () => {
+    if (themeColorValue.length > 0) {
       await fetch("/auth/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ themeColor: color }),
+        body: JSON.stringify({ themeColor: themeColorValue }),
       });
-      setData({ themeColor: color });
-      setThemeColorValue(color);
-      document.documentElement.style.setProperty("--primary", color);
+      setData({ themeColor: themeColorValue });
+      document.documentElement.style.setProperty("--primary", themeColorValue);
     }
-  };
-
-  const logOutHandler = async () => {
-    await fetch("/auth/logout", {
-      method: "POST",
-    });
-    route.push("/login");
   };
 
   const nameChangeHandler = async () => {
@@ -56,6 +48,13 @@ export default function page({}: Props) {
       setData({ user: { ...user, name } });
       setEditName(false);
     }
+  };
+
+  const logOutHandler = async () => {
+    await fetch("/auth/logout", {
+      method: "POST",
+    });
+    route.push("/login");
   };
 
   return (
@@ -82,7 +81,10 @@ export default function page({}: Props) {
                   style={editName ? { borderBottom: "1px solid white" } : {}}
                 />
                 {editName ? (
-                  <i className="uil uil-check" onClick={nameChangeHandler} />
+                  <i
+                    className="uil uil-check"
+                    onClick={() => setEditName(false)}
+                  />
                 ) : (
                   <i
                     className="uil uil-edit"
@@ -104,13 +106,20 @@ export default function page({}: Props) {
                   type="color"
                   id="color"
                   value={themeColorValue}
-                  onChange={(e) => themeColorChangeHandler(e.target.value)}
+                  onChange={(e) => setThemeColorValue(e.target.value)}
                 />
               </div>
             </div>
           </div>
           <div className="action">
-            <button>Save Changes</button>
+            <button
+              onClick={() => {
+                nameChangeHandler();
+                themeColorChangeHandler();
+              }}
+            >
+              Save Changes
+            </button>
             <button onClick={logOutHandler} className="alert">
               Logout
             </button>
