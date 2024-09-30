@@ -21,30 +21,30 @@ export default function Footer({}: Props) {
     >
       <div className="container">
         <Link href={"/level"}>
-          <div className={`ico ${pathname === "/level" ? "order" : ""}`}>
+          <div className={`ico ${pathname === "/level" ? "active" : ""}`}>
             <i className="uil uil-info-circle" />
           </div>
         </Link>
         <Link href={"/leaderboard"}>
-          <div className={`ico ${pathname === "/leaderboard" ? "order" : ""}`}>
+          <div className={`ico ${pathname === "/leaderboard" ? "active" : ""}`}>
             <i className="uil uil-list-ol-alt" />
           </div>
         </Link>
         <Link href={"/"}>
-          <div className={`ico ${pathname === "/" ? "order" : ""}`}>
+          <div className={`ico order ${pathname === "/" ? "" : ""}`}>
             <i className="uil uil-clipboard-notes" />
           </div>
         </Link>
         <Link href={"/notifications"}>
           <div
-            className={`ico ${pathname === "/notifications" ? "order" : ""}`}
+            className={`ico ${pathname === "/notifications" ? "active" : ""}`}
           >
             <i className="uil uil-bell" />
             <div className="alert" />
           </div>
         </Link>
         <Link href={"/profile"}>
-          <div className={`ico ${pathname === "/profile" ? "order" : ""}`}>
+          <div className={`ico ${pathname === "/profile" ? "active" : ""}`}>
             <i className="uil uil-user" />
           </div>
         </Link>
