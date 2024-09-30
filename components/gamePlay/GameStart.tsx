@@ -67,7 +67,7 @@ export default function GameStart({}: Props) {
       setTimeout(() => {
         setCount(3);
         setCountStarted(true);
-      }, settings?.gameDuration);
+      }, settings?.gameDuration + 3000);
     }
   }, [gameStarted]);
 
