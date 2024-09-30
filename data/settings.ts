@@ -28,7 +28,7 @@ const clientProperties = {
 
 const settings = {
     gameDuration: 60000,
-    countDownDuration: 3000,
+    countDown: 3,
     clientProperties,
     levels: {
         level1: {

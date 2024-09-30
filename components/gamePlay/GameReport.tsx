@@ -35,7 +35,7 @@ export default function GameReport() {
       <div className="card">
         <p>Leaderboard</p>
         <div className="rank">
-          <h2>120</h2>
+          <h2>-</h2>
         </div>
         <h3>Your rank</h3>
       </div>
@@ -43,12 +43,14 @@ export default function GameReport() {
         <p>Top Tepa Orders</p>
         <div className="coin">
           <Image src={coinImage} alt="" />
-          <h2>{totalScore}</h2>
+          <h2>{totalScore === 0 ? "-" : totalScore}</h2>
         </div>
       </div>
       <div className="card">
         <p>Tap Rating</p>
-        <h2 className="rating-percentage">{calculateRating()}%</h2>
+        <h2 className="rating-percentage">
+          {calculateRating() ? calculateRating() + "%" : 0}
+        </h2>
         <div className="bar-wraper">
           <div className="progress-bar">
             <div

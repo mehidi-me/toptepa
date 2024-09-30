@@ -1,4 +1,5 @@
 "use client";
+import settings from "@/data/settings";
 import useTapStore from "@/store";
 import React, { useEffect, useState } from "react";
 
@@ -12,7 +13,7 @@ export default function GameStart({}: Props) {
   const [animate, setAnimate] = useState(false);
 
   const startGameHandler = () => {
-    setCount(3);
+    setCount(settings?.countDown);
     setCountStarted(true);
   };
 
@@ -28,9 +29,11 @@ export default function GameStart({}: Props) {
             setCount((prevCount: number) => prevCount - 1);
           } else if (count === 1) {
             if (gameStarted) {
-              setCountStarted(false);
-              setCount("");
-              setGameStarted(false);
+              setCount("Game Over");
+              setTimeout(() => {
+                setCountStarted(false);
+                setGameStarted(false);
+              }, 1000);
             } else {
               setCount("Top Tepa");
             }
@@ -64,7 +67,7 @@ export default function GameStart({}: Props) {
       setTimeout(() => {
         setCount(3);
         setCountStarted(true);
-      }, 4000);
+      }, settings?.gameDuration);
     }
   }, [gameStarted]);
 

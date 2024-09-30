@@ -14,8 +14,6 @@ export type PositionType = {
   imageSrc: string;
 };
 
-const switchInterval = 1300;
-
 export default function Home() {
   const {
     gameStarted,
@@ -24,19 +22,24 @@ export default function Home() {
     setTotalScore,
     activeDiv,
     setActiveDiv,
+    currentLevel,
   } = useTapStore((state) => state);
+
+  const switchInterval =
+    settings?.levels?.[currentLevel]?.clientDuration || 1300;
 
   const [clicked, setClicked] = useState(false);
   const [selectedClient, setSelectedClient] = useState<any>();
 
   const selectRandomClient = () => {
+    const { client1, client2, client3 } = settings?.clientProperties;
     const rand = Math.random();
     if (rand < 0.7) {
-      return settings?.clientProperties?.client1;
+      return client1;
     } else if (rand < 0.8) {
-      return settings?.clientProperties?.client3;
+      return client3;
     } else {
-      return settings?.clientProperties?.client2;
+      return client2;
     }
   };
 
