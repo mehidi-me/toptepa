@@ -9,12 +9,14 @@ interface TapState {
     user: {
         email: string
         name: string
+        profilePicture: any
     }
 
     setData: (to: {
         user?: {
             email: string
             name: string
+            profilePicture: string
         }
         currentLevel?: "level1" | "level2" | "level3" | "level4"
         totalScore?: number
@@ -59,7 +61,8 @@ const useTapStore = create<TapState>()(
 
             user: {
                 email: "",
-                name: ""
+                name: "",
+                profilePicture: ""
             },
 
             gameStarted: false,

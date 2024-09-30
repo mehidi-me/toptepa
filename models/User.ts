@@ -43,7 +43,10 @@ const UserSchema = new Schema({
     themeColor: {
         type: String,
         default: '#1dbf73',
-    }
+    },
+    profilePicture: {
+        type: String,
+    },
 }, { timestamps: true });
 
 // Password hashing middleware

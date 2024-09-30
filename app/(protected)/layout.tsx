@@ -26,6 +26,7 @@ export default function RootLayout({
             user: {
               email: data.user.email,
               name: data.user.name,
+              profilePicture: data.user.profilePicture,
             },
             currentLevel: data.user.currentLevel,
             totalScore: data.user.totalScore || 0,
