@@ -126,8 +126,8 @@ const Home = () => {
     }
   };
 
-  const handleMissedTap = () => {
-    selectedClients.forEach((client) => {
+  const handleMissedTap = (missedClients: PositionType[]) => {
+    missedClients.forEach((client) => {
       if (client.clientType === "good") {
         setTapCount({
           byCorrect: 0,
@@ -146,13 +146,12 @@ const Home = () => {
     ); // 2 divs for levels 3 and 4, 1 for others
     const newClients = selectRandomClients(); // Select multiple clients based on currentLevel
 
+    const missedClients: PositionType[] = newClients;
     setSelectedClients(newClients);
-    console.log(newClients);
-    console.log(selectedDivIndexes);
     setActiveDiv(selectedDivIndexes); // Set active divs
 
     setTimeout(() => {
-      handleMissedTap();
+      handleMissedTap(missedClients);
       setActiveDiv(null);
     }, switchInterval);
   };
