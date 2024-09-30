@@ -88,6 +88,8 @@ const useTapStore = create<TapState>()(
                 }
 
                 saveToDB(state.totalScore, state.currentLevel, updatedTapCount)
+
+                checkForLevelUp()
                 return ({
                     tapCount: updatedTapCount
                 })
@@ -109,7 +111,7 @@ const useTapStore = create<TapState>()(
 )
 
 const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4", tapCount: { correctTap: number, missedTap: number, wrongTap: number }) => {
-    const res = await fetch("/auth/update", {
+    await fetch("/auth/update", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -120,13 +122,20 @@ const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | 
 }
 
 const checkForLevelUp = () => {
-    const { totalScore, currentLevel, tapCount, setCurrentLevel } = useTapStore.getState();
+    const { totalScore, tapCount, setCurrentLevel } = useTapStore.getState();
     const currentTapRating = calculateRating(tapCount);
-    const level = settings?.levels?.[currentLevel];
 
-    if (totalScore >= level?.nextLevelScore && currentTapRating >= level?.nextLevelTap && currentLevel !== "level4") {
-        setCurrentLevel(level?.nextLevel);
+    const levels = Object.entries(settings?.levels)
+
+    for (const [key, level] of levels) {
+        if (totalScore >= level?.nextLevelScore && currentTapRating >= level?.nextLevelTap) {
+            setCurrentLevel(level?.nextLevel);
+            break;
+        } else if (totalScore < level?.nextLevelScore || currentTapRating < level?.nextLevelTap) {
+            setCurrentLevel(key as "level1" | "level2" | "level3" | "level4");
+            break;
+        }
     }
 }
 
-export default useTapStore
+export default useTapStore;

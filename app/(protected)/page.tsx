@@ -99,7 +99,6 @@ const Home = () => {
   const handleMissedTap = (toCheckClients: PositionType[]) => {
     toCheckClients.forEach((client) => {
       if (client.clientType === "good") {
-        console.log("Missed Tap ", count);
         setTapCount({ byCorrect: 0, byWrong: 0, byMissed: 1 });
       }
     });
