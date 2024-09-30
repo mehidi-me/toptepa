@@ -17,8 +17,9 @@ interface TapState {
         currentLevel?: "level1" | "level2" | "level3" | "level4"
         totalScore?: number
         tapCount?: {
-            totalTap: number,
             correctTap: number
+            missedTap: number
+            wrongTap: number
         }
         themeColor?: string
     }) => void
@@ -33,13 +34,17 @@ interface TapState {
     setTotalScore: (by: number) => void
 
     tapCount: {
-        totalTap: number,
-        correctTap: number,
+        correctTap: number
+        missedTap: number
+        wrongTap: number
     }
-    setTapCount: (byTotal: number, byCorrect: number) => void
+    setTapCount: (by: { byCorrect: number, byWrong: number, byMissed: number }) => void
 
     currentLevel: "level1" | "level2" | "level3" | "level4";
     setCurrentLevel: (to: "level1" | "level2" | "level3" | "level4") => void
+
+    activeDiv: any,
+    setActiveDiv: (to: any) => void,
 
     themeColor: string;
     setThemeColor: (to: string) => void
@@ -68,14 +73,18 @@ const useTapStore = create<TapState>()(
             }),
 
             tapCount: {
-                totalTap: 0,
-                correctTap: 0
+                correctTap: 0,
+                missedTap: 0,
+                wrongTap: 0,
             },
-            setTapCount: (byTotal, byCorrect) => set((state) => {
+            setTapCount: (by) => set((state) => {
                 const updatedTapCount = {
-                    totalTap: state.tapCount.totalTap + byTotal,
-                    correctTap: state.tapCount.correctTap + byCorrect
+                    correctTap: state.tapCount.correctTap + Number(by.byCorrect),
+                    wrongTap: state.tapCount.wrongTap + Number(by.byWrong),
+                    missedTap: state.tapCount.missedTap + Number(by.byMissed)
                 }
+
+                console.log(state.tapCount.missedTap)
                 saveToDB(state.totalScore, state.currentLevel, updatedTapCount)
                 return ({
                     tapCount: updatedTapCount
@@ -88,13 +97,17 @@ const useTapStore = create<TapState>()(
                 return ({ currentLevel: to })
             }),
 
+            activeDiv: null,
+            setActiveDiv: (to) => set((state) => ({ activeDiv: to })),
+
             themeColor: "#1dbf73",
             setThemeColor: (to) => set((state) => ({ themeColor: to })),
         })
     ),
 )
 
-const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4", tapCount: { totalTap: number, correctTap: number }) => {
+const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4", tapCount: { correctTap: number, missedTap: number, wrongTap: number }) => {
+    console.log(tapCount)
     const res = await fetch("/auth/update", {
         method: "POST",
         headers: {

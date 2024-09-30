@@ -14,10 +14,15 @@ export default function Level({}: Props) {
   const level = settings?.levels?.[currentLevel];
 
   const calculateRating = () => {
-    const totalTap = tapCount.totalTap;
-    const correctTap = tapCount.correctTap;
-    const rating = Math.round((correctTap / (totalTap || 1)) * 100);
-    return rating;
+    const totalTaps =
+      tapCount.correctTap + tapCount.missedTap + tapCount.wrongTap;
+    let ratingPercentage = 0;
+
+    if (totalTaps > 0) {
+      ratingPercentage = Math.round((tapCount.correctTap / totalTaps) * 100);
+    }
+
+    return ratingPercentage;
   };
 
   return (

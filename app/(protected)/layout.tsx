@@ -30,8 +30,9 @@ export default function RootLayout({
             currentLevel: data.user.currentLevel,
             totalScore: data.user.totalScore || 0,
             tapCount: {
-              totalTap: data.user.tapCount.totalTap || 0,
               correctTap: data.user.tapCount.correctTap || 0,
+              missedTap: data.user.tapCount.missedTap || 0,
+              wrongTap: data.user.tapCount.wrongTap || 0,
             },
           });
           document.documentElement.style.setProperty(

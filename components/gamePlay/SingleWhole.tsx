@@ -1,109 +1,55 @@
+import React from "react";
 import { PositionType } from "@/app/(protected)/page";
 import settings from "@/data/settings";
-import { debounce } from "@/lib/utils";
 import useTapStore from "@/store";
-import Image, { StaticImageData } from "next/image";
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import Image from "next/image";
 
 type Props = {
-  wholeID: string;
-  clientWhole: {
-    id: string;
-    client: {
-      image: StaticImageData;
-      score: number;
-    };
-  };
-  targetWhole: string;
-  clientPositions: PositionType[];
+  handleTap: () => void;
+  selectedClient: PositionType;
   index: number;
+  clicked: boolean;
+  setClicked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function SingleWhole({
-  wholeID,
-  clientWhole,
-  targetWhole,
-  clientPositions,
+  handleTap,
   index,
+  selectedClient,
+  clicked,
+  setClicked,
 }: Props) {
-  const router = useRouter();
-  const { currentLevel, setCurrentLevel, setTotalScore, totalScore, tapCount } =
-    useTapStore((state) => state);
-
-  const [clicked, setClicked] = useState(false);
-
-  const levelUp = () => {
-    const level = settings?.levels?.[currentLevel];
-    const currentTap = Math.round(
-      (tapCount.correctTap / (tapCount.totalTap || 1)) * 100
-    );
-
-    console.log(
-      `Level: ${currentLevel} | Score: ${totalScore} | Tap: ${currentTap}%`
-    );
-    console.log(
-      `Next Level: ${level?.nextLevel} | Score: ${level?.nextLevelScore} | Tap: ${level?.nextLevelTap}%`
-    );
-    console.log(tapCount);
-
-    if (
-      totalScore >= level.nextLevelScore &&
-      currentTap >= level.nextLevelTap &&
-      currentLevel !== "level4"
-    ) {
-      setCurrentLevel(
-        settings?.levels?.[currentLevel]?.nextLevel || currentLevel
-      );
-      router.refresh();
-    }
-  };
-
-  const makeScore = useCallback(
-    debounce((index: number) => {
-      const scoreToAdd = clientPositions[index].client.score;
-
-      setTotalScore(scoreToAdd);
-
-      console.log(`Client Score: ${totalScore}`);
-
-      setClicked(false);
-      // levelUp();
-    }, 300),
-    [clientPositions]
-  );
+  const { activeDiv, currentLevel } = useTapStore((state) => state);
 
   return (
-    wholeID === targetWhole && (
-      <>
-        <div
-          className="anim-img"
-          style={{
-            animationDuration:
-              settings?.levels?.level1?.clientDuration / 1000 + "s",
-          }}
-        >
-          <Image
+    <>
+      <div className={`whole ${activeDiv === index ? "active" : ""}`}>
+        {activeDiv === index && (
+          <div
+            className="anim-img"
             onClick={() => {
               setClicked(true);
-              makeScore(index);
-            }}
-            src={clientWhole?.client?.image}
-            alt="Client Image"
-            className="w-full h-full"
-          />
-        </div>
-        {clicked && (
-          <p
-            style={{
-              animationDuration:
-                settings?.levels?.level1?.clientDuration / 1000 + "s",
+              handleTap();
             }}
           >
-            {clientWhole?.client?.score} Orders
-          </p>
+            <Image src={selectedClient.imageSrc} alt="client" />
+            {clicked && (
+              <p
+                style={{
+                  color:
+                    selectedClient.clientType == "good" ? "#1dbf73" : "#f85e5e",
+                  animationDuration:
+                    settings?.levels?.[currentLevel]?.clientDuration / 1000 +
+                    "s",
+                }}
+              >
+                {selectedClient.clientType == "good" && "+"}{" "}
+                {selectedClient.orders} Orders
+              </p>
+            )}
+          </div>
         )}
-      </>
-    )
+      </div>
+    </>
   );
 }

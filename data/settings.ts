@@ -8,20 +8,23 @@ import Level4 from "@/public/images/top.svg";
 
 export type Level = "level1" | "level2" | "level3" | "level4";
 
-const clientProperties = [
-    {
-        image: Client1,
-        score: 20,
+const clientProperties = {
+    client1: {
+        clientType: "good",
+        orders: 20,
+        imageSrc: Client1
     },
-    {
-        image: Client2,
-        score: -20,
+    client2: {
+        clientType: "bad",
+        orders: -20,
+        imageSrc: Client2
     },
-    {
-        image: Client3,
-        score: 30,
-    },
-]
+    client3: {
+        clientType: "good",
+        orders: 30,
+        imageSrc: Client3
+    }
+}
 
 const settings = {
     gameDuration: 60000,

@@ -1,51 +1,86 @@
 "use client";
-
-import React from "react";
 import GameReport from "@/components/gamePlay/GameReport";
-import GameStart from "@/components/gamePlay/GameStart";
-import SingleWhole from "@/components/gamePlay/SingleWhole";
 import Footer from "@/components/root/Footer";
 import Header from "@/components/root/Header";
 import settings from "@/data/settings";
-import { generateRandom } from "@/lib/utils";
 import useTapStore from "@/store";
-import { StaticImageData } from "next/image";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import SingleWhole from "@/components/gamePlay/SingleWhole";
 
 export type PositionType = {
-  id: string;
-  client: {
-    image: StaticImageData;
-    score: number;
-  };
+  clientType: string;
+  orders: number;
+  imageSrc: string;
 };
 
-export default function Home() {
-  const { gameStarted, setTapCount, countStarted, currentLevel } = useTapStore(
-    (state) => state
-  );
-  const initialTarget = generateRandom(1, 9);
-  const [targetWhole, setTargetWhole] = useState(initialTarget);
-  const [clientPositions, setClientPositions] = useState<PositionType[]>([]);
+const switchInterval = 1300;
 
-  const generateGame = () => {
-    let temp = [];
-    for (let i = 0; i < settings?.levels[currentLevel]?.totalClient; i++) {
-      temp.push({
-        id: `whole${generateRandom(1, 9)}`,
-        client: settings?.clientProperties[generateRandom(0, 3)],
-      });
+export default function Home() {
+  const {
+    gameStarted,
+    setTapCount,
+    countStarted,
+    setTotalScore,
+    activeDiv,
+    setActiveDiv,
+  } = useTapStore((state) => state);
+
+  const [clicked, setClicked] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<any>();
+
+  const selectRandomClient = () => {
+    const rand = Math.random();
+    if (rand < 0.7) {
+      return settings?.clientProperties?.client1;
+    } else if (rand < 0.8) {
+      return settings?.clientProperties?.client3;
+    } else {
+      return settings?.clientProperties?.client2;
     }
-    setClientPositions(temp);
-    console.log(temp);
+  };
+
+  const handleTap = () => {
+    if (selectedClient.clientType === "good") {
+      setTotalScore(selectedClient.orders);
+
+      setTapCount({ byCorrect: 1, byWrong: 0, byMissed: 0 });
+    } else {
+      setTotalScore(-20);
+      setTapCount({ byCorrect: 0, byWrong: 1, byMissed: 0 });
+    }
+  };
+
+  const handleMissedTap = (selectedClient: any) => {
+    if (selectedClient.clientType === "good") {
+      setTapCount({ byCorrect: 0, byWrong: 0, byMissed: 1 });
+    }
+  };
+
+  const switchImage = () => {
+    setClicked(false);
+    if (activeDiv) {
+    }
+
+    const selectedDivIndex = Math.floor(Math.random() * 6);
+    const selectedClient = selectRandomClient();
+
+    setSelectedClient(selectedClient);
+
+    setActiveDiv(selectedDivIndex);
+
+    setTimeout(() => {
+      handleMissedTap(selectedClient);
+      setActiveDiv(null);
+    }, switchInterval);
   };
 
   useEffect(() => {
-    generateGame();
-  }, [currentLevel, gameStarted]);
+    const interval = setInterval(switchImage, switchInterval);
+    return () => clearInterval(interval);
+  }, [activeDiv]);
 
   return (
-    <>
+    <React.Fragment>
       <Header />
       <main
         className="mt-2"
@@ -56,33 +91,22 @@ export default function Home() {
       >
         <div className="container">
           <GameReport />
-          {/* <p>Position: {targetWhole}</p> */}
           <div className="block game-board">
-            <GameStart setTargetWhole={setTargetWhole} />
-            {[...Array(9)].map((_, index) => (
-              <div
-                key={index}
-                className="whole"
-                id={"whole" + (index + 1)}
-                onClick={() => {
-                  setTapCount(1, targetWhole === index + 1 ? 1 : 0);
-                }}
-              >
-                {gameStarted && (
-                  <SingleWhole
-                    wholeID={"whole" + (index + 1)}
-                    clientWhole={clientPositions[index]}
-                    targetWhole={"whole" + targetWhole}
-                    clientPositions={clientPositions}
-                    index={index}
-                  />
-                )}
-              </div>
+            {/* <GameStart setTargetWhole={setTargetWhole} /> */}
+            {Array.from({ length: 9 }, (_, i) => (
+              <SingleWhole
+                key={i}
+                handleTap={handleTap}
+                index={i}
+                selectedClient={selectedClient}
+                clicked={clicked}
+                setClicked={setClicked}
+              />
             ))}
           </div>
         </div>
       </main>
       <Footer />
-    </>
+    </React.Fragment>
   );
 }

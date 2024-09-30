@@ -27,11 +27,15 @@ const UserSchema = new Schema({
         default: 0,
     },
     tapCount: {
-        totalTap: {
+        correctTap: {
             type: Number,
             default: 0,
         },
-        correctTap: {
+        missedTap: {
+            type: Number,
+            default: 0,
+        },
+        wrongTap: {
             type: Number,
             default: 0,
         },
