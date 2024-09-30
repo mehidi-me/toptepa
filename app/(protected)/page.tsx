@@ -147,7 +147,7 @@ const Home = () => {
 
     let selectedDivIndexes = Array.from(
       { length: Number(currentLevel.split("level")[1]) >= 3 ? 4 : 1 },
-      () => Math.floor(Math.random() * 6)
+      () => Math.floor(Math.random() * 9)
     );
 
     while (
@@ -156,7 +156,7 @@ const Home = () => {
     ) {
       selectedDivIndexes = Array.from(
         { length: Number(currentLevel.split("level")[1]) >= 3 ? 4 : 1 },
-        () => Math.floor(Math.random() * 6)
+        () => Math.floor(Math.random() * 9)
       );
     }
 
