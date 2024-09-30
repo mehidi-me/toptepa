@@ -84,7 +84,6 @@ const useTapStore = create<TapState>()(
                     missedTap: state.tapCount.missedTap + Number(by.byMissed)
                 }
 
-                console.log(state.tapCount.missedTap)
                 saveToDB(state.totalScore, state.currentLevel, updatedTapCount)
                 return ({
                     tapCount: updatedTapCount
@@ -107,7 +106,6 @@ const useTapStore = create<TapState>()(
 )
 
 const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4", tapCount: { correctTap: number, missedTap: number, wrongTap: number }) => {
-    console.log(tapCount)
     const res = await fetch("/auth/update", {
         method: "POST",
         headers: {
@@ -117,11 +115,6 @@ const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | 
     });
 
     const data = await res.json();
-    if (data.success) {
-        console.log("Saved to DB");
-    } else {
-        console.log("Failed to save to DB");
-    }
 }
 
 export default useTapStore

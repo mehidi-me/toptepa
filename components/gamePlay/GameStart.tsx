@@ -27,7 +27,13 @@ export default function GameStart({}: Props) {
           if (count > 1) {
             setCount((prevCount: number) => prevCount - 1);
           } else if (count === 1) {
-            setCount("Top Tepa");
+            if (gameStarted) {
+              setCountStarted(false);
+              setCount("");
+              setGameStarted(false);
+            } else {
+              setCount("Top Tepa");
+            }
           } else {
             setCount("");
             clearInterval(interval);
@@ -52,6 +58,15 @@ export default function GameStart({}: Props) {
       return () => clearTimeout(timeout);
     }
   }, [count]);
+
+  useEffect(() => {
+    if (gameStarted) {
+      setTimeout(() => {
+        setCount(3);
+        setCountStarted(true);
+      }, 4000);
+    }
+  }, [gameStarted]);
 
   return (
     <React.Fragment>
