@@ -126,8 +126,8 @@ const Home = () => {
     }
   };
 
-  const handleMissedTap = (missedClients: PositionType[]) => {
-    missedClients.forEach((client) => {
+  const handleMissedTap = () => {
+    selectedClients.forEach((client) => {
       if (client.clientType === "good") {
         setTapCount({
           byCorrect: 0,
@@ -140,20 +140,26 @@ const Home = () => {
 
   const switchImage = () => {
     setClicked(-1);
-    const selectedDivIndexes = Array.from(
+
+    let selectedDivIndexes = Array.from(
       { length: Number(currentLevel.split("level")[1]) >= 3 ? 4 : 1 },
       () => Math.floor(Math.random() * 6)
-    ); // 2 divs for levels 3 and 4, 1 for others
-    const newClients = selectRandomClients(); // Select multiple clients based on currentLevel
+    );
 
-    const missedClients: PositionType[] = newClients;
+    while (
+      JSON.stringify(activeDiv.sort()) ===
+      JSON.stringify(selectedDivIndexes.sort())
+    ) {
+      selectedDivIndexes = Array.from(
+        { length: Number(currentLevel.split("level")[1]) >= 3 ? 4 : 1 },
+        () => Math.floor(Math.random() * 6)
+      );
+    }
+
+    const newClients = selectRandomClients();
+
     setSelectedClients(newClients);
-    setActiveDiv(selectedDivIndexes); // Set active divs
-
-    setTimeout(() => {
-      handleMissedTap(missedClients);
-      setActiveDiv(null);
-    }, switchInterval);
+    setActiveDiv(selectedDivIndexes);
   };
 
   useEffect(() => {
@@ -169,6 +175,14 @@ const Home = () => {
       }
     };
   }, [gameStarted, activeDiv, switchInterval]);
+
+  useEffect(() => {
+    if (activeDiv && activeDiv.length > 0) {
+      setTimeout(() => {
+        handleMissedTap();
+      }, switchInterval - 500);
+    }
+  }, [activeDiv]);
 
   return (
     <React.Fragment>
