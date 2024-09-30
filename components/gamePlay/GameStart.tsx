@@ -61,7 +61,7 @@ export default function GameStart({}: Props) {
             id="countDown"
             style={{
               opacity: fade ? 1 : 0,
-              fontSize: fade ? "40vw" : "10vw",
+              fontSize: fade ? "15vw" : "2vw",
             }}
           >
             {count}
