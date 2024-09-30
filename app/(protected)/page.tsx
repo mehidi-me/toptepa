@@ -54,24 +54,29 @@ const Home = () => {
     );
 
     setAllClients(clients);
-    // allClients = clients;
   };
 
   const selectRandomClients = () => {
     const clients: PositionType[] = [];
     const clientsToShow = Number(currentLevel.split("level")[1]) >= 3 ? 4 : 1;
 
+    const indexToRemove: number[] = [];
+
     for (let i = 0; i < clientsToShow; i++) {
       const randomIndex = Math.floor(Math.random() * allClients.length);
 
-      const selectedClient = allClients[randomIndex];
+      if (!indexToRemove.includes(randomIndex)) {
+        indexToRemove.push(randomIndex);
+      }
 
-      setAllClients((prevClients) =>
-        prevClients.filter((_, index) => index != randomIndex)
-      );
+      const selectedClient = allClients[randomIndex];
 
       clients.push(selectedClient);
     }
+
+    setAllClients((prevClients) =>
+      prevClients.filter((_, index) => !indexToRemove.includes(index))
+    );
 
     return clients;
   };
@@ -98,12 +103,14 @@ const Home = () => {
 
   const switchImage = () => {
     setClicked(-1);
+    const levelNum = Number(currentLevel.split("level")[1]);
+    const clientsToShow = levelNum >= 3 ? 4 : 1;
 
-    const clientsToShow = Number(currentLevel.split("level")[1]) >= 3 ? 4 : 1;
     let selectedDivIndexes = Array.from({ length: clientsToShow }, () =>
       Math.floor(Math.random() * 9)
     );
 
+    let retries = 0;
     while (
       JSON.stringify(activeDiv.sort()) ===
       JSON.stringify(selectedDivIndexes.sort())
@@ -111,11 +118,14 @@ const Home = () => {
       selectedDivIndexes = Array.from({ length: clientsToShow }, () =>
         Math.floor(Math.random() * 9)
       );
+      retries++;
+      if (retries > 10) break;
     }
 
-    if (allClients.length === 3) {
+    if (allClients.length <= clientsToShow) {
       initializeClientCounts();
     }
+
     setSelectedClients(selectRandomClients());
     setActiveDiv(selectedDivIndexes);
   };
