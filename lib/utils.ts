@@ -16,5 +16,21 @@ const debounce = (func: Function, delay: number) => {
     };
 };
 
+const calculateRating = (tapCount: {
+    correctTap: number;
+    missedTap: number;
+    wrongTap: number;
+}) => {
+    const totalTaps =
+        tapCount.correctTap + tapCount.missedTap + tapCount.wrongTap;
+    let ratingPercentage = 0;
 
-export { generateRandom, debounce }
+    if (totalTaps > 0) {
+        ratingPercentage = Math.round((tapCount.correctTap / totalTaps) * 100);
+    }
+
+    return ratingPercentage;
+};
+
+
+export { generateRandom, debounce, calculateRating }

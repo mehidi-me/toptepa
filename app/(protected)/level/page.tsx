@@ -1,11 +1,11 @@
 "use client";
-
-import React from "react";
 import Footer from "@/components/root/Footer";
 import "@/public/css/level.css";
 import Image from "next/image";
 import useTapStore from "@/store";
 import settings from "@/data/settings";
+import React from "react";
+import { calculateRating } from "@/lib/utils";
 
 type Props = {};
 
@@ -13,20 +13,8 @@ export default function Level({}: Props) {
   const { currentLevel, tapCount, totalScore } = useTapStore((state) => state);
   const level = settings?.levels?.[currentLevel];
 
-  const calculateRating = () => {
-    const totalTaps =
-      tapCount.correctTap + tapCount.missedTap + tapCount.wrongTap;
-    let ratingPercentage = 0;
-
-    if (totalTaps > 0) {
-      ratingPercentage = Math.round((tapCount.correctTap / totalTaps) * 100);
-    }
-
-    return ratingPercentage;
-  };
-
   return (
-    <>
+    <React.Fragment>
       <main>
         <div className="container">
           <div className="current-level-badge">
@@ -56,16 +44,16 @@ export default function Level({}: Props) {
               <div className="header">
                 <div className="flex">
                   <p>Tap Rating</p>
-                  <h2>{calculateRating()}%</h2>
+                  <h2>{calculateRating(tapCount)}%</h2>
                 </div>
                 <div className="bar-wraper">
                   <div className="progress-bar">
                     <div
                       className="progress"
                       style={{
-                        width: calculateRating() + "%",
+                        width: calculateRating(tapCount) + "%",
                         backgroundColor:
-                          calculateRating() < 70 ? "var(--alert)" : "",
+                          calculateRating(tapCount) < 70 ? "var(--alert)" : "",
                       }}
                     />
                   </div>
@@ -82,7 +70,7 @@ export default function Level({}: Props) {
                   <p>Maintain current level</p>
                   <p>Quality for next level</p>
                 </div>
-                {calculateRating() < level?.nextLevelTap ? (
+                {calculateRating(tapCount) < level?.nextLevelTap ? (
                   <div className="block alert">
                     <i className="uil uil-multiply" />
                     <p>Qualified for next level</p>
@@ -126,6 +114,6 @@ export default function Level({}: Props) {
         </div>
       </section>
       <Footer />
-    </>
+    </React.Fragment>
   );
 }

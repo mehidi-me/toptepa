@@ -2,22 +2,11 @@ import settings from "@/data/settings";
 import Image from "next/image";
 import coinImage from "@/public/images/coin.png";
 import useTapStore from "@/store";
+import { calculateRating } from "@/lib/utils";
 
 export default function GameReport() {
   const { totalScore, currentLevel, tapCount } = useTapStore((state) => state);
   const level = settings?.levels?.[currentLevel];
-
-  const calculateRating = () => {
-    const totalTaps =
-      tapCount.correctTap + tapCount.missedTap + tapCount.wrongTap;
-    let ratingPercentage = 0;
-
-    if (totalTaps > 0) {
-      ratingPercentage = Math.round((tapCount.correctTap / totalTaps) * 100);
-    }
-
-    return ratingPercentage;
-  };
 
   return (
     <div className="block report">
@@ -49,15 +38,16 @@ export default function GameReport() {
       <div className="card">
         <p>Tap Rating</p>
         <h2 className="rating-percentage">
-          {calculateRating() ? calculateRating() + "%" : 0}
+          {calculateRating(tapCount) ? calculateRating(tapCount) + "%" : "-"}
         </h2>
         <div className="bar-wraper">
           <div className="progress-bar">
             <div
               className="progress"
               style={{
-                width: calculateRating() + "%",
-                backgroundColor: calculateRating() < 70 ? "var(--alert)" : "",
+                width: calculateRating(tapCount) + "%",
+                backgroundColor:
+                  calculateRating(tapCount) < 70 ? "var(--alert)" : "",
               }}
             />
           </div>

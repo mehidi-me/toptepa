@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware';
 import type { } from '@redux-devtools/extension'
+import settings from '@/data/settings';
+import { calculateRating } from '@/lib/utils';
 
 
 interface TapState {
@@ -69,6 +71,7 @@ const useTapStore = create<TapState>()(
             totalScore: 0,
             setTotalScore: (by) => set((state) => {
                 saveToDB(state.totalScore + by, state.currentLevel, state.tapCount)
+                checkForLevelUp()
                 return ({ totalScore: state.totalScore + by })
             }),
 
@@ -114,7 +117,16 @@ const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | 
         body: JSON.stringify({ totalScore, currentLevel, tapCount }),
     });
 
-    const data = await res.json();
+}
+
+const checkForLevelUp = () => {
+    const { totalScore, currentLevel, tapCount, setCurrentLevel } = useTapStore.getState();
+    const currentTapRating = calculateRating(tapCount);
+    const level = settings?.levels?.[currentLevel];
+
+    if (totalScore >= level?.nextLevelScore && currentTapRating >= level?.nextLevelTap && currentLevel !== "level4") {
+        setCurrentLevel(level?.nextLevel);
+    }
 }
 
 export default useTapStore
