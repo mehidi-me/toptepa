@@ -4,7 +4,7 @@ const secret = process.env.JWT_SECRET;
 
 export async function signToken(payload: object): Promise<string> {
     const iat = Math.floor(Date.now() / 1000);
-    const exp = iat + 60 * 60 * 24 * 7; // 7 day
+    const exp = iat + (60 * 60 * 24 * 7); // 7 day
 
     return new SignJWT({ payload })
         .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })

@@ -1,6 +1,6 @@
 "use client";
 import { DM_Sans } from "next/font/google";
-import "./style.css";
+import "@/public/css/style.css";
 import "@/public/css/custom.css";
 import useTapStore from "@/store";
 

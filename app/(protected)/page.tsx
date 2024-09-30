@@ -6,6 +6,7 @@ import settings from "@/data/settings";
 import useTapStore from "@/store";
 import React, { useEffect, useState } from "react";
 import SingleWhole from "@/components/gamePlay/SingleWhole";
+import GameStart from "@/components/gamePlay/GameStart";
 
 export type PositionType = {
   clientType: string;
@@ -75,9 +76,12 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const interval = setInterval(switchImage, switchInterval);
+    let interval: ReturnType<typeof setInterval>;
+    if (gameStarted) {
+      interval = setInterval(switchImage, switchInterval);
+    }
     return () => clearInterval(interval);
-  }, [activeDiv]);
+  }, [gameStarted, activeDiv]);
 
   return (
     <React.Fragment>
@@ -92,7 +96,7 @@ export default function Home() {
         <div className="container">
           <GameReport />
           <div className="block game-board">
-            {/* <GameStart setTargetWhole={setTargetWhole} /> */}
+            <GameStart />
             {Array.from({ length: 9 }, (_, i) => (
               <SingleWhole
                 key={i}

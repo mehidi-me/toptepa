@@ -1,78 +1,78 @@
 "use client";
-
-import React from "react";
-import settings from "@/data/settings";
-import { generateRandom } from "@/lib/utils";
 import useTapStore from "@/store";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-type Props = {
-  setTargetWhole: React.Dispatch<React.SetStateAction<number>>;
-};
+type Props = {};
 
-export default function GameStart({ setTargetWhole }: Props) {
-  const { gameStarted, setGameStarted, countStarted, setCountStarted } =
+export default function GameStart({}: Props) {
+  const { gameStarted, countStarted, setCountStarted, setGameStarted } =
     useTapStore((state) => state);
+  const [count, setCount] = useState<any>(-1);
+  const [fade, setFade] = useState(true);
+  const [animate, setAnimate] = useState(false);
 
-  const [gameCountDown, setGameCountDown] = useState(
-    settings.countDownDuration / 1000
-  );
-
-  const startGame = () => {
+  const startGameHandler = () => {
+    setCount(3);
     setCountStarted(true);
-
-    const gameCount = setInterval(() => {
-      setGameCountDown((prev) => prev - 1);
-    }, 1000);
-
-    if (!gameStarted) {
-      setTimeout(() => {
-        setCountStarted(false);
-        clearInterval(gameCount);
-        setGameStarted(true);
-      }, settings.countDownDuration);
-    }
   };
 
   useEffect(() => {
-    let gameOver: NodeJS.Timeout;
-    if (gameStarted) {
-      let lastTarget = 0;
-      const gameCount = setInterval(() => {
-        let target = generateRandom(1, 9);
+    if (count >= -1) {
+      const interval = setInterval(() => {
+        setFade(false);
+        setAnimate(true);
 
-        while (target == lastTarget) {
-          target = generateRandom(1, 9);
-        }
+        setTimeout(() => {
+          setFade(true);
+          if (count > 1) {
+            setCount((prevCount: number) => prevCount - 1);
+          } else if (count === 1) {
+            setCount("Top Tepa");
+          } else {
+            setCount("");
+            clearInterval(interval);
+          }
+        }, 400);
+      }, 1000);
 
-        lastTarget = target;
-        setTargetWhole(target);
-        console.log(target);
-      }, 2000);
-
-      gameOver = setTimeout(() => {
-        setGameStarted(false);
-        clearInterval(gameCount);
-      }, settings.gameDuration);
+      return () => clearInterval(interval);
     }
+  }, [count]);
 
-    return () => {
-      clearTimeout(gameOver);
-    };
-  }, [gameStarted]);
+  useEffect(() => {
+    if (count === "Top Tepa") {
+      const timeout = setTimeout(() => {
+        setFade(false);
+        setTimeout(() => {
+          setCount(null);
+          setGameStarted(true);
+        }, 600);
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [count]);
 
   return (
-    <>
+    <React.Fragment>
       {countStarted && (
         <div className="countDown-main">
-          <p id="countDown">{gameCountDown}</p>
+          <span
+            id="countDown"
+            style={{
+              opacity: fade ? 1 : 0,
+              fontSize: fade ? "40vw" : "10vw",
+            }}
+          >
+            {count}
+          </span>
         </div>
       )}
-      {!gameStarted && (
+      {!countStarted && (
         <div className="start">
-          {!countStarted && <button onClick={startGame}>Start</button>}
+          <button onClick={startGameHandler}>Start</button>
         </div>
       )}
-    </>
+    </React.Fragment>
   );
 }

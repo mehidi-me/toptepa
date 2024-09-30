@@ -23,7 +23,7 @@ export default function GameReport() {
     <div className="block report">
       <div className="card">
         <p>Your Level</p>
-        <div className="lavel">
+        <div className="level">
           <Image
             src={level?.icon}
             alt="Level"
