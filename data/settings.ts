@@ -61,7 +61,7 @@ const settings = {
             totalClient: 45,
             client2Count: 9,
             client3Count: 7,
-            clientDuration: 1200,
+            clientDuration: 1300,
             nextLevelScore: 1000000,
             nextLevelTap: 90,
             nextLevel: "level4" as Level,
@@ -72,9 +72,9 @@ const settings = {
             totalClient: 55,
             client2Count: 10,
             client3Count: 27,
-            clientDuration: 1000,
-            nextLevelScore: 300,
-            nextLevelTap: 100,
+            clientDuration: 1300,
+            nextLevelScore: 10000000000,
+            nextLevelTap: 110,
             nextLevel: "level4" as Level,
         }
     }

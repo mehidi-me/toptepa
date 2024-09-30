@@ -130,7 +130,6 @@ const checkForLevelUp = () => {
     for (const [key, level] of levels) {
         if (totalScore >= level?.nextLevelScore && currentTapRating >= level?.nextLevelTap) {
             setCurrentLevel(level?.nextLevel);
-            break;
         } else if (totalScore < level?.nextLevelScore || currentTapRating < level?.nextLevelTap) {
             setCurrentLevel(key as "level1" | "level2" | "level3" | "level4");
             break;
