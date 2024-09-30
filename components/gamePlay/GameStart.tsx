@@ -10,7 +10,7 @@ export default function GameStart({}: Props) {
     useTapStore((state) => state);
   const [count, setCount] = useState<any>(-1);
   const [fade, setFade] = useState(true);
-  const [animate, setAnimate] = useState(false);
+  const [ending, setEnding] = useState(false);
 
   const startGameHandler = () => {
     setCount(settings?.countDown);
@@ -21,18 +21,16 @@ export default function GameStart({}: Props) {
     if (count >= -1) {
       const interval = setInterval(() => {
         setFade(false);
-        setAnimate(true);
 
         setTimeout(() => {
           setFade(true);
           if (count > 1) {
             setCount((prevCount: number) => prevCount - 1);
           } else if (count === 1) {
-            if (gameStarted) {
+            if (ending) {
               setCount("Game Over");
               setTimeout(() => {
                 setCountStarted(false);
-                setGameStarted(false);
               }, 1000);
             } else {
               setCount("Top Tepa");
@@ -65,9 +63,11 @@ export default function GameStart({}: Props) {
   useEffect(() => {
     if (gameStarted) {
       setTimeout(() => {
+        setGameStarted(false);
+        setEnding(true);
         setCount(3);
         setCountStarted(true);
-      }, settings?.gameDuration + 3000);
+      }, settings?.gameDuration);
     }
   }, [gameStarted]);
 
