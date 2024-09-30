@@ -7,14 +7,14 @@ import { serialize } from 'cookie';
 export async function POST(req: Request) {
     await connectDB();
 
-    const { phone, password } = await req.json();
+    const { email, password } = await req.json();
 
-    if (!phone || !password) {
-        return NextResponse.json({ error: 'Phone and password are required' }, { status: 400 });
+    if (!email || !password) {
+        return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
-    // Find user by phone
-    const user = await User.findOne({ phone });
+    // Find user by email
+    const user = await User.findOne({ email });
     if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     // Check if password matches
     const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) {
-        return NextResponse.json({ error: 'Invalid phone or password' }, { status: 401 });
+        return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
     // Generate JWT token

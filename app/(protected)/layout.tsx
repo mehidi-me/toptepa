@@ -24,7 +24,7 @@ export default function RootLayout({
         if (data.success) {
           setData({
             user: {
-              phone: data.user.phone,
+              email: data.user.email,
               name: data.user.name,
             },
             currentLevel: data.user.currentLevel,
@@ -34,6 +34,10 @@ export default function RootLayout({
               correctTap: data.user.tapCount.correctTap || 0,
             },
           });
+          document.documentElement.style.setProperty(
+            "--primary",
+            data.user.themeColor
+          );
         }
       } catch (error) {
         console.log(error);

@@ -1,9 +1,13 @@
+"use client";
+
 import useTapStore from "@/store";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 type Props = {};
 
 export default function Footer({}: Props) {
+  const pathname = usePathname();
   const { countStarted, gameStarted } = useTapStore((state) => state);
   return (
     <div
@@ -17,28 +21,30 @@ export default function Footer({}: Props) {
     >
       <div className="container">
         <Link href={"/level"}>
-          <div className="ico">
+          <div className={`ico ${pathname === "/level" ? "order" : ""}`}>
             <i className="uil uil-info-circle" />
           </div>
         </Link>
         <Link href={"/leaderboard"}>
-          <div className="ico">
+          <div className={`ico ${pathname === "/leaderboard" ? "order" : ""}`}>
             <i className="uil uil-list-ol-alt" />
           </div>
         </Link>
         <Link href={"/"}>
-          <div className="ico order">
+          <div className={`ico ${pathname === "/" ? "order" : ""}`}>
             <i className="uil uil-clipboard-notes" />
           </div>
         </Link>
         <Link href={"/notifications"}>
-          <div className="ico">
+          <div
+            className={`ico ${pathname === "/notifications" ? "order" : ""}`}
+          >
             <i className="uil uil-bell" />
             <div className="alert" />
           </div>
         </Link>
         <Link href={"/profile"}>
-          <div className="ico">
+          <div className={`ico ${pathname === "/profile" ? "order" : ""}`}>
             <i className="uil uil-user" />
           </div>
         </Link>

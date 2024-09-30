@@ -5,20 +5,22 @@ import type { } from '@redux-devtools/extension'
 
 interface TapState {
     user: {
-        phone: string
+        email: string
         name: string
     }
+
     setData: (to: {
-        user: {
-            phone: string
+        user?: {
+            email: string
             name: string
         }
-        currentLevel: "level1" | "level2" | "level3" | "level4"
-        totalScore: number
-        tapCount: {
+        currentLevel?: "level1" | "level2" | "level3" | "level4"
+        totalScore?: number
+        tapCount?: {
             totalTap: number,
             correctTap: number
         }
+        themeColor?: string
     }) => void
 
     gameStarted: boolean
@@ -38,6 +40,9 @@ interface TapState {
 
     currentLevel: "level1" | "level2" | "level3" | "level4";
     setCurrentLevel: (to: "level1" | "level2" | "level3" | "level4") => void
+
+    themeColor: string;
+    setThemeColor: (to: string) => void
 }
 
 const useTapStore = create<TapState>()(
@@ -46,7 +51,7 @@ const useTapStore = create<TapState>()(
             setData: (to) => set((state) => ({ ...to })),
 
             user: {
-                phone: "",
+                email: "",
                 name: ""
             },
 
@@ -82,6 +87,9 @@ const useTapStore = create<TapState>()(
                 saveToDB(state.totalScore, to, state.tapCount)
                 return ({ currentLevel: to })
             }),
+
+            themeColor: "#1dbf73",
+            setThemeColor: (to) => set((state) => ({ themeColor: to })),
         })
     ),
 )

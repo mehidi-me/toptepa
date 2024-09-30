@@ -7,7 +7,7 @@ import { cookies } from 'next/headers';
 
 export async function POST(req: Request) {
     await connectDB();
-    const { totalScore, currentLevel, tapCount } = await req.json();
+    const { totalScore, currentLevel, tapCount, name, themeColor } = await req.json();
 
     // Get token from cookies
     const cookieStore = cookies()
@@ -24,16 +24,10 @@ export async function POST(req: Request) {
     }
 
     // Find user by ID
-    const user = await User.findById(decoded.payload.id).select('-password');
+    const user = await User.updateOne({ _id: decoded.payload.id }, { totalScore, currentLevel, tapCount, name, themeColor });
     if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
-
-    user.totalScore = totalScore;
-    user.currentLevel = currentLevel;
-    user.tapCount = tapCount;
-
-    await user.save();
 
     return NextResponse.json({ success: true, user: user });
 }

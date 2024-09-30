@@ -9,8 +9,9 @@ import Link from "next/link";
 type Props = {};
 
 export default function page({}: Props) {
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [fiverrName, setFiverrName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -29,7 +30,7 @@ export default function page({}: Props) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, phone, password }),
+        body: JSON.stringify({ name, email, password, fiverrName }),
       });
 
       const data = await res.json();
@@ -54,7 +55,7 @@ export default function page({}: Props) {
           <form onSubmit={handleRegister}>
             <div className="profile-input">
               <label className="profile-pic" htmlFor="pic-up">
-                <img src="images/user.png" alt="" />
+                <img src="images/avatar.png" alt="" />
                 <i className="uil uil-camera-plus" />
               </label>
               <input type="file" id="pic-up" />
@@ -70,20 +71,27 @@ export default function page({}: Props) {
               />
               <label htmlFor="public-name">Public profile name</label>
             </div>
-            {/* <div className="fild">
-              <input type="text" id="fiverr-name" placeholder=" " required />
-              <label htmlFor="fiverr-name">Fiverr user name</label>
-            </div> */}
             <div className="fild">
               <input
                 type="text"
-                id="phone"
+                id="fiverr-name"
                 placeholder=" "
                 required
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={fiverrName}
+                onChange={(e) => setFiverrName(e.target.value)}
               />
-              <label htmlFor="phone">Phone</label>
+              <label htmlFor="fiverr-name">Fiverr user name</label>
+            </div>
+            <div className="fild">
+              <input
+                type="email"
+                id="email"
+                placeholder=" "
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="email">Email</label>
             </div>
             <div className="fild">
               <input

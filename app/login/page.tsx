@@ -8,7 +8,7 @@ import Link from "next/link";
 type Props = {};
 
 export default function page({}: Props) {
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const route = useRouter();
@@ -21,7 +21,7 @@ export default function page({}: Props) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phone, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
@@ -43,14 +43,14 @@ export default function page({}: Props) {
           <form onSubmit={handleLogin}>
             <div className="fild">
               <input
-                type="text"
-                id="phone"
+                type="email"
+                id="email"
                 placeholder=""
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <label htmlFor="phone">Phone</label>
+              <label htmlFor="email">Email</label>
             </div>
             <div className="fild">
               <input

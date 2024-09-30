@@ -2,12 +2,15 @@ import mongoose, { Schema, model, models } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const UserSchema = new Schema({
-    phone: {
+    email: {
         type: String,
         required: true,
         unique: true,
     },
     name: {
+        type: String,
+    },
+    fiverrName: {
         type: String,
     },
     password: {
@@ -33,6 +36,10 @@ const UserSchema = new Schema({
             default: 0,
         },
     },
+    themeColor: {
+        type: String,
+        default: '#1dbf73',
+    }
 }, { timestamps: true });
 
 // Password hashing middleware

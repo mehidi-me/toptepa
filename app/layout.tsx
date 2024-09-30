@@ -20,6 +20,7 @@ export default function RootLayout({
       <link
         rel="stylesheet"
         href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"
+        precedence="default"
       ></link>
       <body
         className={`${dmSans.className} ${
