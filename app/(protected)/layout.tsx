@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import useTapStore from "@/store";
 import Image from "next/image";
 import loadingImage from "@/public/images/loading.svg";

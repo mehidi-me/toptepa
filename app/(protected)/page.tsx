@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import GameReport from "@/components/gamePlay/GameReport";
 import GameStart from "@/components/gamePlay/GameStart";
 import SingleWhole from "@/components/gamePlay/SingleWhole";
@@ -20,7 +21,7 @@ export type PositionType = {
 };
 
 export default function Home() {
-  const { gameStarted, setTapCount, tapCount, currentLevel } = useTapStore(
+  const { gameStarted, setTapCount, countStarted, currentLevel } = useTapStore(
     (state) => state
   );
   const initialTarget = generateRandom(1, 9);
@@ -46,7 +47,13 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="mt-2">
+      <main
+        className="mt-2"
+        style={{
+          transition: "all 0.7s ease-in-out",
+          paddingTop: countStarted || gameStarted ? "0" : "8rem",
+        }}
+      >
         <div className="container">
           <GameReport />
           {/* <p>Position: {targetWhole}</p> */}

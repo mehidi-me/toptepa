@@ -10,8 +10,12 @@ export default function GameReport() {
     <div className="block report">
       <div className="card">
         <p>Your Level</p>
-        <div className="level">
-          <Image src={level?.icon} alt="Level" className="w-full h-full" />
+        <div className="lavel">
+          <Image
+            src={level?.icon}
+            alt="Level"
+            style={{ width: "100%", height: "100%" }}
+          />
         </div>
         <h3>{level?.label}</h3>
       </div>
@@ -25,7 +29,7 @@ export default function GameReport() {
       <div className="card">
         <p>Top Tepa Orders</p>
         <div className="coin">
-          <Image src={coinImage} alt="" className="w-full h-full" />
+          <Image src={coinImage} alt="" />
           <h2>{totalScore}</h2>
         </div>
       </div>

@@ -1,8 +1,6 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware';
 import type { } from '@redux-devtools/extension'
-import connectDB from '@/lib/mongodb';
-import User from '@/models/User';
 
 
 interface TapState {
@@ -25,6 +23,9 @@ interface TapState {
 
     gameStarted: boolean
     setGameStarted: (to: boolean) => void
+
+    countStarted: boolean
+    setCountStarted: (to: boolean) => void
 
     totalScore: number
     setTotalScore: (by: number) => void
@@ -51,6 +52,9 @@ const useTapStore = create<TapState>()(
 
             gameStarted: false,
             setGameStarted: (to) => set((state) => ({ gameStarted: to })),
+
+            countStarted: false,
+            setCountStarted: (to) => set((state) => ({ countStarted: to })),
 
             totalScore: 0,
             setTotalScore: (by) => set((state) => {

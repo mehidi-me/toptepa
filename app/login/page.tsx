@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import "@/public/css/form.css";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {};
 
@@ -68,7 +69,7 @@ export default function page({}: Props) {
             )}
             <div className="addons">
               <p>
-                Don't have an account? <a href="/register">Register</a>
+                Don't have an account? <Link href="/register">Register</Link>
               </p>
             </div>
           </form>

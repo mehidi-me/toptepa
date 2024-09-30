@@ -1,4 +1,6 @@
 "use client";
+
+import React from "react";
 import settings from "@/data/settings";
 import { generateRandom } from "@/lib/utils";
 import useTapStore from "@/store";
@@ -9,16 +11,15 @@ type Props = {
 };
 
 export default function GameStart({ setTargetWhole }: Props) {
-  const gameStarted = useTapStore((state) => state.gameStarted);
-  const setGameStarted = useTapStore((state) => state.setGameStarted);
+  const { gameStarted, setGameStarted, countStarted, setCountStarted } =
+    useTapStore((state) => state);
 
-  const [countDownStarted, setCountDownStarted] = useState(false);
   const [gameCountDown, setGameCountDown] = useState(
     settings.countDownDuration / 1000
   );
 
   const startGame = () => {
-    setCountDownStarted(true);
+    setCountStarted(true);
 
     const gameCount = setInterval(() => {
       setGameCountDown((prev) => prev - 1);
@@ -26,7 +27,7 @@ export default function GameStart({ setTargetWhole }: Props) {
 
     if (!gameStarted) {
       setTimeout(() => {
-        setCountDownStarted(false);
+        setCountStarted(false);
         clearInterval(gameCount);
         setGameStarted(true);
       }, settings.countDownDuration);
@@ -62,14 +63,14 @@ export default function GameStart({ setTargetWhole }: Props) {
 
   return (
     <>
-      {countDownStarted && (
+      {countStarted && (
         <div className="countDown-main">
           <p id="countDown">{gameCountDown}</p>
         </div>
       )}
       {!gameStarted && (
         <div className="start">
-          {!countDownStarted && <button onClick={startGame}>Start</button>}
+          {!countStarted && <button onClick={startGame}>Start</button>}
         </div>
       )}
     </>

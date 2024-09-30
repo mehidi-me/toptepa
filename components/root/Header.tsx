@@ -1,11 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import userImage from "@/public/images/user.png";
 import useTapStore from "@/store";
 
 export default function Header({}) {
-  const { user } = useTapStore((state) => state);
+  const { user, countStarted, gameStarted } = useTapStore((state) => state);
   return (
-    <header>
+    <header
+      className={`on-game-start`}
+      style={{
+        position: "absolute",
+        top: 0,
+        transform:
+          countStarted || gameStarted ? "translateY(-100%)" : "translateY(0%)",
+      }}
+    >
       <div className="container">
         <div className="greetings">
           <p>

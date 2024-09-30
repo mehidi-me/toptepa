@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import "@/public/css/profile.css";
 import "@/public/css/form.css";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {};
 
@@ -124,7 +125,7 @@ export default function page({}: Props) {
             )}
             <div className="addons">
               <p>
-                Already have an account? <a href="/login">Login</a>
+                Already have an account? <Link href="/login">Login</Link>
               </p>
             </div>
           </form>

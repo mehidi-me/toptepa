@@ -1,47 +1,47 @@
-import {
-  BellIcon,
-  ClipboardIcon,
-  InfoIcon,
-  ListIcon,
-  UserIcon,
-} from "lucide-react";
+import useTapStore from "@/store";
+import Link from "next/link";
 
 type Props = {};
 
 export default function Footer({}: Props) {
+  const { countStarted, gameStarted } = useTapStore((state) => state);
   return (
-    <div className="footer-menu">
+    <div
+      className={`footer-menu on-game-start`}
+      style={{
+        position: "fixed",
+        bottom: 0,
+        transform:
+          countStarted || gameStarted ? "translateY(100%)" : "translateY(0%)",
+      }}
+    >
       <div className="container">
-        <a href={"/level"}>
+        <Link href={"/level"}>
           <div className="ico">
-            <InfoIcon />
+            <i className="uil uil-info-circle" />
           </div>
-        </a>
-        <a href={"/leaderboard"}>
+        </Link>
+        <Link href={"/leaderboard"}>
           <div className="ico">
-            {/* <i className="uil uil-list-ol-alt" /> */}
-            <ListIcon />
+            <i className="uil uil-list-ol-alt" />
           </div>
-        </a>
-        <a href={"/"}>
+        </Link>
+        <Link href={"/"}>
           <div className="ico order">
-            {/* <i className="uil uil-clipboard-notes" /> */}
-            <ClipboardIcon />
+            <i className="uil uil-clipboard-notes" />
           </div>
-        </a>
-        <a href={"/notifications"}>
+        </Link>
+        <Link href={"/notifications"}>
           <div className="ico">
-            {/* <i className="uil uil-bell" /> */}
-            <BellIcon />
+            <i className="uil uil-bell" />
             <div className="alert" />
           </div>
-        </a>
-        <a href={"/profile"}>
+        </Link>
+        <Link href={"/profile"}>
           <div className="ico">
-            {/* <i className="uil uil-user" /> */}
-            <UserIcon />
+            <i className="uil uil-user" />
           </div>
-        </a>
+        </Link>
       </div>
     </div>
   );
