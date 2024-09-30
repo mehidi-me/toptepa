@@ -6,6 +6,14 @@ import useTapStore from "@/store";
 export default function GameReport() {
   const { totalScore, currentLevel, tapCount } = useTapStore((state) => state);
   const level = settings?.levels?.[currentLevel];
+
+  const calculateRating = () => {
+    const totalTap = tapCount.totalTap;
+    const correctTap = tapCount.correctTap;
+    const rating = Math.round((correctTap / (totalTap || 1)) * 100);
+    return rating;
+  };
+  
   return (
     <div className="block report">
       <div className="card">
@@ -35,18 +43,14 @@ export default function GameReport() {
       </div>
       <div className="card">
         <p>Tap Rating</p>
-        <h2 className="rating-percentage">
-          {Math.round((tapCount.correctTap / (tapCount.totalTap || 1)) * 100)}%
-        </h2>
+        <h2 className="rating-percentage">{calculateRating()}%</h2>
         <div className="bar-wraper">
           <div className="progress-bar">
             <div
               className="progress"
               style={{
-                width:
-                  Math.round(
-                    (tapCount.correctTap / (tapCount.totalTap || 1)) * 100
-                  ) + "%",
+                width: calculateRating() + "%",
+                backgroundColor: calculateRating() < 70 ? "var(--alert)" : "",
               }}
             />
           </div>

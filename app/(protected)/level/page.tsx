@@ -1,36 +1,45 @@
+"use client";
+
+import React from "react";
 import Footer from "@/components/root/Footer";
 import "@/public/css/level.css";
 import Image from "next/image";
-import newImage from "@/public/images/new.svg";
+import useTapStore from "@/store";
+import settings from "@/data/settings";
 
 type Props = {};
 
-export default function page({}: Props) {
+export default function Level({}: Props) {
+  const { currentLevel, tapCount, totalScore } = useTapStore((state) => state);
+  const level = settings?.levels?.[currentLevel];
+
+  const calculateRating = () => {
+    const totalTap = tapCount.totalTap;
+    const correctTap = tapCount.correctTap;
+    const rating = Math.round((correctTap / (totalTap || 1)) * 100);
+    return rating;
+  };
+
   return (
     <>
       <main>
         <div className="container">
           <div className="current-level-badge">
-            <Image src={newImage} alt="" className="w-full h-full" />
-            <p>Newby</p>
+            <Image src={level?.icon} alt="Level" />
+            <p>{level?.label}</p>
           </div>
           <div className="level-flow">
-            <div className="level active">
-              <Image src={newImage} alt="" className="w-full h-full" />
-              <p>Newby</p>
-            </div>
-            <div className="level">
-              <Image src={newImage} alt="" className="w-full h-full" />
-              <p>Tepa</p>
-            </div>
-            <div className="level">
-              <Image src={newImage} alt="" className="w-full h-full" />
-              <p>Tepa King</p>
-            </div>
-            <div className="level">
-              <Image src={newImage} alt="" className="w-full h-full" />
-              <p>Top Tepa</p>
-            </div>
+            {Object.entries(settings?.levels)?.map(([key, level], index) => {
+              return (
+                <div
+                  key={index}
+                  className={`level ${key === currentLevel ? "active" : ""}`}
+                >
+                  <Image src={level.icon} alt="" className="w-full h-full" />
+                  <p>{level.label}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </main>
@@ -42,11 +51,18 @@ export default function page({}: Props) {
               <div className="header">
                 <div className="flex">
                   <p>Tap Rating</p>
-                  <h2>95%</h2>
+                  <h2>{calculateRating()}%</h2>
                 </div>
                 <div className="bar-wraper">
                   <div className="progress-bar">
-                    <div className="progress" style={{ width: "95%" }} />
+                    <div
+                      className="progress"
+                      style={{
+                        width: calculateRating() + "%",
+                        backgroundColor:
+                          calculateRating() < 70 ? "var(--alert)" : "",
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="placement">
@@ -61,10 +77,17 @@ export default function page({}: Props) {
                   <p>Maintain current level</p>
                   <p>Quality for next level</p>
                 </div>
-                <div className="block">
-                  <i className="uil uil-check" />
-                  <p>Qualified for next level</p>
-                </div>
+                {calculateRating() < level?.nextLevelTap ? (
+                  <div className="block alert">
+                    <i className="uil uil-multiply" />
+                    <p>Qualified for next level</p>
+                  </div>
+                ) : (
+                  <div className="block">
+                    <i className="uil uil-check" />
+                    <p>Qualified for next level</p>
+                  </div>
+                )}
               </div>
             </div>
             <div className="block">
@@ -72,7 +95,7 @@ export default function page({}: Props) {
                 <div className="flex">
                   <p>Top Tepa Orders</p>
                   <h3>
-                    <span>105,980</span> / 10,000
+                    <span>{totalScore}</span> / {level?.nextLevelScore}
                   </h3>
                 </div>
               </div>
@@ -81,10 +104,17 @@ export default function page({}: Props) {
                   <p>Maintain current level</p>
                   <p>Quality for next level</p>
                 </div>
-                <div className="block alert">
-                  <i className="uil uil-multiply" />
-                  <p>Qualified for next level</p>
-                </div>
+                {totalScore < level?.nextLevelScore ? (
+                  <div className="block alert">
+                    <i className="uil uil-multiply" />
+                    <p>Qualified for next level</p>
+                  </div>
+                ) : (
+                  <div className="block">
+                    <i className="uil uil-check" />
+                    <p>Qualified for next level</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
