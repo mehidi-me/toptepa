@@ -30,6 +30,8 @@ export default function GameStart({}: Props) {
             if (ending) {
               setCount("Game Over");
               setTimeout(() => {
+                setGameStarted(false);
+                setEnding(false);
                 setCountStarted(false);
               }, 1000);
             } else {
@@ -63,11 +65,10 @@ export default function GameStart({}: Props) {
   useEffect(() => {
     if (gameStarted) {
       setTimeout(() => {
-        setGameStarted(false);
         setEnding(true);
         setCount(3);
         setCountStarted(true);
-      }, settings?.gameDuration);
+      }, settings?.gameDuration - 3800);
     }
   }, [gameStarted]);
 
