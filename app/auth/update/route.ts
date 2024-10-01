@@ -11,6 +11,7 @@ export async function POST(req: Request) {
     currentLevel,
     tapCount,
     name,
+    fiverrName,
     themeColor,
     profilePicture,
   } = await req.json();
@@ -32,7 +33,7 @@ export async function POST(req: Request) {
   // Find user by ID
   const user = await User.updateOne(
     { _id: decoded.payload.id },
-    { totalScore, currentLevel, tapCount, name, themeColor, profilePicture }
+    { totalScore, currentLevel, tapCount, name, themeColor, profilePicture, fiverrName }
   );
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
