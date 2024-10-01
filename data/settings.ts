@@ -13,17 +13,17 @@ export type Level = "level1" | "level2" | "level3" | "level4";
 const clientProperties = {
     client1: {
         clientType: "good",
-        orders: 20,
+        orders: 3,
         imageSrc: Client1
     },
     client2: {
         clientType: "bad",
-        orders: -20,
+        orders: -2,
         imageSrc: Client2
     },
     client3: {
         clientType: "good",
-        orders: 30,
+        orders: 5,
         imageSrc: Client3
     }
 }
