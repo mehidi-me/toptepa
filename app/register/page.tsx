@@ -161,7 +161,7 @@ export default function page({}: Props) {
               }}
               type="submit"
             >
-              Start TepaTepi
+              Complete Registration
             </button>
             {message && (
               <p
