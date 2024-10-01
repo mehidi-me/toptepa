@@ -7,14 +7,14 @@ import { calculateRating } from '@/lib/utils';
 
 interface TapState {
     user: {
-        email: string
+        phone: string
         name: string
         profilePicture: any
     }
 
     setData: (to: {
         user?: {
-            email: string
+            phone: string
             name: string
             profilePicture: string
         }
@@ -60,7 +60,7 @@ const useTapStore = create<TapState>()(
             setData: (to) => set((state) => ({ ...to })),
 
             user: {
-                email: "",
+                phone: "",
                 name: "",
                 profilePicture: ""
             },

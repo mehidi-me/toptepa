@@ -24,7 +24,7 @@ export default function RootLayout({
         if (data.success) {
           setData({
             user: {
-              email: data.user.email,
+              phone: data.user.phone,
               name: data.user.name,
               profilePicture: data.user.profilePicture,
             },

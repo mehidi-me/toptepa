@@ -8,7 +8,7 @@ import Link from "next/link";
 type Props = {};
 
 export default function page({}: Props) {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [fiverrName, setFiverrName] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +23,24 @@ export default function page({}: Props) {
     setLoading(true);
     e.preventDefault();
 
+    if (name.length < 3) {
+      setMessage("Name must be at least 3 characters");
+      setLoading(false);
+      return;
+    }
+
+    if (phone.length == 11) {
+      setMessage("Phone number must be 10 characters");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setMessage("Password must be at least 6 characters");
+      setLoading(false);
+      return;
+    }
+
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
       setLoading(false);
@@ -34,7 +52,7 @@ export default function page({}: Props) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password, fiverrName }),
+        body: JSON.stringify({ name, phone, password, fiverrName }),
       });
 
       const data = await res.json();
@@ -75,9 +93,9 @@ export default function page({}: Props) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <label htmlFor="public-name">Public profile name</label>
+              <label htmlFor="public-name">Display name</label>
             </div>
-            <div className="fild">
+            {/* <div className="fild">
               <input
                 type="text"
                 id="fiverr-name"
@@ -87,17 +105,17 @@ export default function page({}: Props) {
                 onChange={(e) => setFiverrName(e.target.value)}
               />
               <label htmlFor="fiverr-name">Fiverr user name</label>
-            </div>
+            </div> */}
             <div className="fild">
               <input
-                type="email"
-                id="email"
+                type="phone"
+                id="phone"
                 placeholder=" "
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
-              <label htmlFor="email">Email</label>
+              <label htmlFor="phone">Phone</label>
             </div>
             <div className="fild">
               <input
