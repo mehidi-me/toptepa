@@ -29,7 +29,7 @@ export default function page({}: Props) {
       return;
     }
 
-    if (phone.length == 11) {
+    if (phone.length != 11) {
       setMessage("Phone number must be 11 characters");
       setLoading(false);
       return;
