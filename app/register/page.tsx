@@ -30,7 +30,7 @@ export default function page({}: Props) {
     }
 
     if (phone.length == 11) {
-      setMessage("Phone number must be 10 characters");
+      setMessage("Phone number must be 11 characters");
       setLoading(false);
       return;
     }
@@ -108,7 +108,7 @@ export default function page({}: Props) {
             </div> */}
             <div className="fild">
               <input
-                type="phone"
+                type="text"
                 id="phone"
                 placeholder=" "
                 required
