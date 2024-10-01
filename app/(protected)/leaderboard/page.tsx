@@ -2,12 +2,13 @@ import Footer from "@/components/root/Footer";
 import "@/public/css/leaderboard.css";
 import Image from "next/image";
 import userImage from "@/public/images/user.png";
+import React from "react";
 
 type Props = {};
 
 export default function page({}: Props) {
   return (
-    <>
+    <React.Fragment>
       <main className="mt-2">
         <div className="container">
           <div className="block">
@@ -80,6 +81,6 @@ export default function page({}: Props) {
         </div>
       </main>
       <Footer />
-    </>
+    </React.Fragment>
   );
 }

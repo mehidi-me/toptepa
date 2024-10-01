@@ -1,6 +1,4 @@
 "use client";
-
-import Image from "next/image";
 import useTapStore from "@/store";
 
 export default function Header({}) {
@@ -24,7 +22,7 @@ export default function Header({}) {
         </div>
         <div className="profile-pic">
           <img
-            src={user?.profilePicture || "/images/user.png"}
+            src={user?.profilePicture || "/images/avatar.png"}
             alt=""
             className="w-full h-full"
           />
