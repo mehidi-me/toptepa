@@ -75,7 +75,7 @@ export default function GameStart({}: Props) {
   return (
     <React.Fragment>
       {countStarted && (
-        <div className="countDown-main">
+        <div className="countDown-main" style={{ pointerEvents: "none" }}>
           <span
             id="countDown"
             style={{
