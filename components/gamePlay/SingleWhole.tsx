@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { PositionType } from "@/app/(protected)/page";
 import settings from "@/data/settings";
 import useTapStore from "@/store";
 import Image from "next/image";
+import debounce from "lodash.debounce";
 
 type Props = {
   handleTap: (selectedClient: PositionType) => void;
@@ -25,18 +26,20 @@ export default function SingleWhole({
 }: Props) {
   const { currentLevel } = useTapStore((state) => state);
 
+  const debouncedFunction = useCallback(
+    debounce(() => {
+      clearTimeout(missTimer);
+      setClicked(index);
+      handleTap(selectedClient);
+    }, 200),
+    [missTimer, index, selectedClient]
+  );
+
   return (
     <>
       <div className={`whole`}>
         {toActive && (
-          <div
-            className="anim-img"
-            onClick={() => {
-              clearTimeout(missTimer);
-              setClicked(index);
-              handleTap(selectedClient);
-            }}
-          >
+          <div className="anim-img" onClick={debouncedFunction}>
             <Image src={selectedClient.imageSrc} alt="client" />
             {clicked == index && (
               <p
