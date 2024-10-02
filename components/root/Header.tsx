@@ -1,5 +1,6 @@
 "use client";
 import useTapStore from "@/store";
+import Link from "next/link";
 
 export default function Header({}) {
   const { user, countStarted, gameStarted } = useTapStore((state) => state);
@@ -20,13 +21,13 @@ export default function Header({}) {
           </p>
           <h1>Welcome back</h1>
         </div>
-        <div className="profile-pic">
+        <Link href={"/profile"} className="profile-pic">
           <img
             src={user?.profilePicture || "/images/avatar.png"}
             alt=""
             className="w-full h-full"
           />
-        </div>
+        </Link>
       </div>
     </header>
   );

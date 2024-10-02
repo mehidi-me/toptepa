@@ -120,7 +120,7 @@ export default function page({}: Props) {
               </div>
             </div>
           </div>
-          <div className="block">
+          <div className="block" style={{display:'none'}}>
             <div className="flex">
               <p>Primary theme color</p>
               <div className="color-picker">
@@ -144,7 +144,11 @@ export default function page({}: Props) {
           <h2 className="title">Contest</h2>
           <div className="block">
 
-          <div className="fild">
+          {user?.fiverrName ? (
+            <h1>You are in🐰</h1>
+          ) : (
+            <>
+            <div className="fild">
               <input
                 type="text"
                 id="fiverr_username"
@@ -156,6 +160,8 @@ export default function page({}: Props) {
               <label htmlFor="fiverr_username">Fiverr Username</label>
             </div>
             <button onClick={saveHandler2}>Join Contest</button>
+            </>
+          )}
           </div>
         </div>
       </main>

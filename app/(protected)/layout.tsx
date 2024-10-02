@@ -26,6 +26,7 @@ export default function RootLayout({
             user: {
               phone: data.user.phone,
               name: data.user.name,
+              fiverrName: data.user.fiverrName,
               profilePicture: data.user.profilePicture,
             },
             currentLevel: data.user.currentLevel,

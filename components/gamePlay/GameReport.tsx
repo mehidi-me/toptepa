@@ -3,6 +3,8 @@ import Image from "next/image";
 import coinImage from "@/public/images/coin.png";
 import useTapStore from "@/store";
 import { calculateRating } from "@/lib/utils";
+import Link from "next/link";
+
 
 export default function GameReport() {
   const { totalScore, currentLevel, tapCount } = useTapStore((state) => state);
@@ -10,7 +12,8 @@ export default function GameReport() {
 
   return (
     <div className="block report">
-      <div className="card">
+      <Link href={"/level"} className="card">
+     
         <p>Your Level</p>
         <div className="level">
           <Image
@@ -20,7 +23,8 @@ export default function GameReport() {
           />
         </div>
         <h3>{level?.label}</h3>
-      </div>
+      
+      </Link>
       <div className="card">
         <p>Leaderboard</p>
         <div className="rank">

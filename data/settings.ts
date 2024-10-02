@@ -13,17 +13,17 @@ export type Level = "level1" | "level2" | "level3" | "level4";
 const clientProperties = {
     client1: {
         clientType: "good",
-        orders: 3,
+        orders: 2,
         imageSrc: Client1
     },
     client2: {
         clientType: "bad",
-        orders: -2,
+        orders: -1,
         imageSrc: Client2
     },
     client3: {
         clientType: "good",
-        orders: 5,
+        orders: 3,
         imageSrc: Client3
     }
 }
@@ -50,8 +50,8 @@ const settings = {
             totalClient: 35,
             client2Count: 6,
             client3Count: 0,
-            clientDuration: 1300,
-            nextLevelScore: 20000,
+            clientDuration: 1400,
+            nextLevelScore: 2000,
             nextLevelTap: 80,
             nextLevel: "level3" as Level,
         },
@@ -62,7 +62,7 @@ const settings = {
             client2Count: 9,
             client3Count: 7,
             clientDuration: 1300,
-            nextLevelScore: 1000000,
+            nextLevelScore: 10000,
             nextLevelTap: 90,
             nextLevel: "level4" as Level,
         },
