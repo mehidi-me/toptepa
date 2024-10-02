@@ -40,7 +40,7 @@ export default function SingleWhole({
       <div className={`whole`}>
         {toActive && (
           <div className="anim-img" onClick={debouncedFunction}>
-            <Image src={selectedClient.imageSrc} alt="client" />
+            <Image priority={true} src={selectedClient.imageSrc} alt="client" />
             {clicked == index && (
               <p
                 style={{
