@@ -61,7 +61,17 @@ video {
   max-width: 100%;
 }
 
-.container {
+/* .leaderboard  .container, 
+.notification  .container, 
+.level  .container,
+.profile  .container  {
+  max-width: 940px;
+  padding: 0 2rem;
+  margin: auto;
+  width: 100%;
+} */
+
+.container  {
   max-width: 940px;
   padding: 0 2rem;
   margin: auto;
@@ -131,7 +141,12 @@ header .container {
   margin-top: 2rem;
 }
 
-main .container {
+main.leaderboard .container, 
+main.notification .container, 
+main.level-page .container,
+main.profile .container,
+main.home .container,
+main.contributor .container {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -462,6 +477,7 @@ main .container {
   left: 50%;
   top: 50%;
   text-align: center;
+  pointer-events: none !important;
 }
 
 @media (max-width: 660px) {

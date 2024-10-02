@@ -41,7 +41,7 @@
   transform: translateX(-50%);
   bottom: 1rem;
 }
-.profile-pic::before {
+.form .profile-pic::before {
   content: "";
   position: absolute;
   left: 0;

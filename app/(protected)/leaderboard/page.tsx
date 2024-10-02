@@ -1,5 +1,5 @@
 import Footer from "@/components/root/Footer";
-import "@/public/css/leaderboard.css";
+// import "@/public/css/leaderboard.css";
 import Image from "next/image";
 import userImage from "@/public/images/user.png";
 import React from "react";
@@ -9,8 +9,11 @@ type Props = {};
 export default function page({}: Props) {
   return (
     <React.Fragment>
-      <main className="mt-2">
+      <main className="mt-2 leaderboard">
         <div className="container">
+        <h2 className="title">
+        Leader board
+      </h2>
           <div className="block">
             <table>
               <tbody>
@@ -31,7 +34,7 @@ export default function page({}: Props) {
                   <td>10,000</td>
                   <td>95%</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>2.</td>
                   <td className="user">
                     <div className="profile-pic">
@@ -74,7 +77,7 @@ export default function page({}: Props) {
                   </td>
                   <td>10,000</td>
                   <td>95%</td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
           </div>

@@ -20,8 +20,8 @@ export default function Footer({}: Props) {
       }}
     >
       <div className="container">
-        <Link href={"/level"}>
-          <div className={`ico ${pathname === "/level" ? "active" : ""}`}>
+        <Link href={"/contributor"}>
+          <div className={`ico ${pathname === "/contributor" ? "active" : ""}`}>
             <i className="uil uil-info-circle" />
           </div>
         </Link>

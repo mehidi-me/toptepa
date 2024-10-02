@@ -1,0 +1,27 @@
+
+.contributor .dprofile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .contributor .dprofile .user-profile {
+    width: 10rem;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+  }
+  .contributor  .dprofile p {
+    font-size: 1.4rem;
+    color: var(--sub-text);
+  }
+  .contributor .body {
+    text-align: center;
+  }
+  .contributor .body h2 {
+    font-size: 2.3rem;
+  }
+  .contributor .body p {
+    font-size: 1.6rem !important;
+  }

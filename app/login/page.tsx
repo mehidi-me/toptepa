@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import "@/public/css/form.css";
+// import "@/public/css/form.css";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -40,7 +40,7 @@ export default function page({}: Props) {
   };
 
   return (
-    <main>
+    <main className="form">
       <div className="container">
         <div className="block">
           <h2 className="title">Login</h2>

@@ -1,6 +1,6 @@
 "use client";
 import Footer from "@/components/root/Footer";
-import "@/public/css/level.css";
+// import "@/public/css/level.css";
 import Image from "next/image";
 import useTapStore from "@/store";
 import settings from "@/data/settings";
@@ -15,7 +15,7 @@ export default function Level({}: Props) {
 
   return (
     <React.Fragment>
-      <main>
+      <main className="level-page">
         <div className="container">
           <div className="current-level-badge">
             <Image src={level?.icon} alt="Level" />

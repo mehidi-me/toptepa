@@ -2,7 +2,7 @@
 
 import React from "react";
 import Footer from "@/components/root/Footer";
-import "@/public/css/profile.css";
+// import "@/public/css/profile.css";
 import { useRouter } from "next/navigation";
 import useTapStore from "@/store";
 import { useRef, useState } from "react";
@@ -14,6 +14,7 @@ export default function page({}: Props) {
   const route = useRouter();
   const { user, setData, themeColor } = useTapStore((state) => state);
   const [name, setName] = useState(user?.name || "");
+  const [userName, setUserName] = useState(user?.fiverrName || "");
   const [editName, setEditName] = useState(false);
   const [file, setFile] = useState<any>(user?.profilePicture || null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -48,6 +49,25 @@ export default function page({}: Props) {
       setEditName(false);
     }
   };
+  const saveHandler2 = async () => {
+    if (userName.length > 0) {
+      await fetch("/auth/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fiverrName: userName
+        }),
+      });
+      setData({
+        user: { ...user, fiverrName:userName },
+        themeColor: themeColorValue,
+      });
+    }else{
+      alert("Please Enter Your Fiverr Username");
+    }
+  };
 
   const logOutHandler = async () => {
     await fetch("/auth/logout", {
@@ -58,7 +78,7 @@ export default function page({}: Props) {
 
   return (
     <>
-      <main className="mt-2">
+      <main className="mt-2 profile">
         <div className="container">
           <h2 className="title">Profile Settings</h2>
           <div className="gap-1">
@@ -119,6 +139,23 @@ export default function page({}: Props) {
             <button onClick={logOutHandler} className="alert">
               Logout
             </button>
+          </div>
+
+          <h2 className="title">Contest</h2>
+          <div className="block">
+
+          <div className="fild">
+              <input
+                type="text"
+                id="fiverr_username"
+                placeholder=" "
+                required
+               
+                 onChange={(e) => setUserName(e.target.value)}
+              />
+              <label htmlFor="fiverr_username">Fiverr Username</label>
+            </div>
+            <button onClick={saveHandler2}>Join Contest</button>
           </div>
         </div>
       </main>

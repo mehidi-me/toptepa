@@ -157,7 +157,7 @@ const Home = () => {
     <React.Fragment>
       <Header />
       <main
-        className="mt-2"
+        className="mt-2 home"
         style={{
           transition: "all 0.7s ease-in-out",
           paddingTop: countStarted || gameStarted ? "0" : "8rem",

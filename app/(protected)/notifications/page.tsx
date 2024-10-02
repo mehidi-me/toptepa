@@ -1,12 +1,12 @@
 import Footer from "@/components/root/Footer";
-import "@/public/css/notification.css";
+// import "@/public/css/notification.css";
 
 type Props = {};
 
 export default function page({}: Props) {
   return (
     <>
-      <main className="mt-2">
+      <main className="mt-2 notification">
         <div className="container">
           <h2 className="title">Notifications</h2>
           <div className="block">

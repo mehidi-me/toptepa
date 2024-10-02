@@ -10,12 +10,14 @@ interface TapState {
         phone: string
         name: string
         profilePicture: any
+        fiverrName: string
     }
 
     setData: (to: {
         user?: {
             phone: string
             name: string
+            fiverrName:string
             profilePicture: string
         }
         currentLevel?: "level1" | "level2" | "level3" | "level4"
@@ -62,6 +64,7 @@ const useTapStore = create<TapState>()(
             user: {
                 phone: "",
                 name: "",
+                fiverrName: "",
                 profilePicture: ""
             },
 
