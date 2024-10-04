@@ -17,6 +17,7 @@ export type PositionType = {
   clientType: string;
   orders: number;
   imageSrc: StaticImageData;
+  audio_type: HTMLAudioElement;
 };
 
 let count = 0;
@@ -33,6 +34,8 @@ const Home = () => {
     currentLevel,
     showModal,
     setGamePaused,
+    setGameStarted,
+    setCountStarted,
   } = useTapStore((state) => state);
 
   const switchInterval =
@@ -193,17 +196,29 @@ const Home = () => {
               />
             ))}
           </div>
-          {!gamePaused && gameStarted && (
-            <center>
-              <button
-                style={{ marginTop: "1rem" }}
-                className="alert"
-                onClick={() => setGamePaused(true)}
-              >
-                Pause game
-              </button>
-            </center>
+
+          {gameStarted && (
+            <div className="action">
+              <center>
+                {" "}
+                <button
+                  className="alert"
+                  onClick={() => {
+                    setGamePaused(false);
+                    setGameStarted(false);
+                    setCountStarted(false);
+                  }}
+                >
+                  Exit Game
+                </button>
+              </center>
+
+              {!gamePaused && (
+                <button onClick={() => setGamePaused(true)}>Pause</button>
+              )}
+            </div>
           )}
+
           {showModal && <LevelUpModal />}
         </div>
       </main>

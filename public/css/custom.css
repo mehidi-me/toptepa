@@ -6,7 +6,7 @@
 
 .on-game-start-body {
     transition: all 0.7s ease-in-out;
-    overflow: hidden;
+    overflow: auto;
     height: 100vh;
     padding: 0 !important;
     margin: 0 !important;
