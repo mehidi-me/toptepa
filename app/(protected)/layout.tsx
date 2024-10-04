@@ -5,6 +5,7 @@ import useTapStore from "@/store";
 import Image from "next/image";
 import loadingImage from "@/public/images/loading.gif";
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({
   children,
@@ -65,7 +66,10 @@ export default function RootLayout({
           <Image src={loadingImage} alt="Loading" width={200} height={200} />
         </div>
       ) : (
-        <>{children}</>
+        <>
+          <Toaster />
+          {children}
+        </>
       )}
     </>
   );

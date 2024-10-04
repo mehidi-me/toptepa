@@ -67,7 +67,12 @@ const Home = () => {
 
   const selectRandomClients = () => {
     const clients: PositionType[] = [];
-    const clientsToShow = Number(currentLevel.split("level")[1]) >= 3 ? 4 : 1;
+    let clientsToShow = 1;
+    if (Number(currentLevel.split("level")[1]) >= 3) {
+      clientsToShow = 4;
+    } else if (Number(currentLevel.split("level")[1]) >= 2) {
+      clientsToShow = 2;
+    }
 
     const indexToRemove: number[] = [];
 

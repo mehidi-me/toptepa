@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import useTapStore from "@/store";
 import { useRef, useState } from "react";
 import { toBase64 } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -18,12 +19,14 @@ export default function page({}: Props) {
   const [editName, setEditName] = useState(false);
   const [file, setFile] = useState<any>(user?.profilePicture || null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [unsaved, setUnsaved] = useState(false);
 
   const [themeColorValue, setThemeColorValue] = useState(
     themeColor || "#1dbf73"
   );
 
   const handleFileChange = async (event: any) => {
+    setUnsaved(true);
     const fileBase = (await toBase64(event.target.files[0])) as string;
     setFile(fileBase);
   };
@@ -47,6 +50,8 @@ export default function page({}: Props) {
       });
       document.documentElement.style.setProperty("--primary", themeColorValue);
       setEditName(false);
+      setUnsaved(false);
+      toast.success("Saved Changes!");
     }
   };
   const saveHandler2 = async () => {
@@ -57,14 +62,15 @@ export default function page({}: Props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fiverrName: userName
+          fiverrName: userName,
         }),
       });
       setData({
-        user: { ...user, fiverrName:userName },
+        user: { ...user, fiverrName: userName },
         themeColor: themeColorValue,
       });
-    }else{
+      toast.success("Joined Contest Successfully!");
+    } else {
       alert("Please Enter Your Fiverr Username");
     }
   };
@@ -100,7 +106,10 @@ export default function page({}: Props) {
                   type="text"
                   disabled={!editName}
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setUnsaved(true);
+                    setName(e.target.value);
+                  }}
                   style={editName ? { borderBottom: "1px solid white" } : {}}
                 />
                 {editName ? (
@@ -120,7 +129,7 @@ export default function page({}: Props) {
               </div>
             </div>
           </div>
-          <div className="block" style={{display:'none'}}>
+          <div className="block" style={{ display: "none" }}>
             <div className="flex">
               <p>Primary theme color</p>
               <div className="color-picker">
@@ -129,13 +138,18 @@ export default function page({}: Props) {
                   type="color"
                   id="color"
                   value={themeColorValue}
-                  onChange={(e) => setThemeColorValue(e.target.value)}
+                  onChange={(e) => {
+                    setUnsaved(true);
+                    setThemeColorValue(e.target.value);
+                  }}
                 />
               </div>
             </div>
           </div>
           <div className="action">
-            <button onClick={saveHandler}>Save Changes</button>
+            <button disabled={!unsaved} onClick={saveHandler}>
+              Save Changes
+            </button>
             <button onClick={logOutHandler} className="alert">
               Logout
             </button>
@@ -143,25 +157,23 @@ export default function page({}: Props) {
 
           <h2 className="title">Contest</h2>
           <div className="block">
-
-          {user?.fiverrName ? (
-            <h1>You are in🐰</h1>
-          ) : (
-            <>
-            <div className="fild">
-              <input
-                type="text"
-                id="fiverr_username"
-                placeholder=" "
-                required
-               
-                 onChange={(e) => setUserName(e.target.value)}
-              />
-              <label htmlFor="fiverr_username">Fiverr Username</label>
-            </div>
-            <button onClick={saveHandler2}>Join Contest</button>
-            </>
-          )}
+            {user?.fiverrName ? (
+              <h1>You are in🐰</h1>
+            ) : (
+              <>
+                <div className="fild">
+                  <input
+                    type="text"
+                    id="fiverr_username"
+                    placeholder=" "
+                    required
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                  <label htmlFor="fiverr_username">Fiverr Username</label>
+                </div>
+                <button onClick={saveHandler2}>Join Contest</button>
+              </>
+            )}
           </div>
         </div>
       </main>
