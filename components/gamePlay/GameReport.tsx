@@ -6,8 +6,9 @@ import { calculateRating } from "@/lib/utils";
 import Link from "next/link";
 
 export default function GameReport() {
-  const { totalScore, currentLevel, tapCount, setGamePaused, user } =
-    useTapStore((state) => state);
+  const { totalScore, currentLevel, tapCount, user } = useTapStore(
+    (state) => state
+  );
   const level = settings?.levels?.[currentLevel];
 
   return (
@@ -57,7 +58,6 @@ export default function GameReport() {
           </div>
         </div>
       </div>
-      <button onClick={() => setGamePaused(true)}>Pause</button>
     </div>
   );
 }

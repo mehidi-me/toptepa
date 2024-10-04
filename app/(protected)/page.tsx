@@ -32,6 +32,7 @@ const Home = () => {
     setActiveDiv,
     currentLevel,
     showModal,
+    setGamePaused,
   } = useTapStore((state) => state);
 
   const switchInterval =
@@ -187,6 +188,17 @@ const Home = () => {
               />
             ))}
           </div>
+          {!gamePaused && gameStarted && (
+            <center>
+              <button
+                style={{ marginTop: "1rem" }}
+                className="alert"
+                onClick={() => setGamePaused(true)}
+              >
+                Pause game
+              </button>
+            </center>
+          )}
           {showModal && <LevelUpModal />}
         </div>
       </main>
