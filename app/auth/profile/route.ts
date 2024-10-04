@@ -27,5 +27,11 @@ export async function GET(req: Request) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, user: user });
+    const userScore = user.totalScore;
+
+    const higherScoresCount = await User.countDocuments({ totalScore: { $gt: userScore } });
+
+    const rank = higherScoresCount + 1;
+
+    return NextResponse.json({ success: true, user: user, rank });
 }

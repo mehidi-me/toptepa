@@ -6,9 +6,8 @@ import { calculateRating } from "@/lib/utils";
 import Link from "next/link";
 
 export default function GameReport() {
-  const { totalScore, currentLevel, tapCount, setGamePaused } = useTapStore(
-    (state) => state
-  );
+  const { totalScore, currentLevel, tapCount, setGamePaused, user } =
+    useTapStore((state) => state);
   const level = settings?.levels?.[currentLevel];
 
   return (
@@ -27,7 +26,7 @@ export default function GameReport() {
       <div className="card">
         <p>Leaderboard</p>
         <div className="rank">
-          <h2>-</h2>
+          <h2>{user?.rank}</h2>
         </div>
         <h3>Your rank</h3>
       </div>

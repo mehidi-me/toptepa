@@ -28,6 +28,7 @@ export default function RootLayout({
               name: data.user.name,
               fiverrName: data.user.fiverrName,
               profilePicture: data.user.profilePicture,
+              rank: data.rank,
             },
             currentLevel: data.user.currentLevel,
             totalScore: data.user.totalScore || 0,

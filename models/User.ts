@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const UserSchema = new Schema({
@@ -61,5 +61,7 @@ UserSchema.pre('save', async function (next) {
 UserSchema.methods.comparePassword = async function (password: string) {
     return bcrypt.compare(password, this.password);
 };
+
+UserSchema.index({ totalScore: 1 });
 
 export default models.User || model('User', UserSchema);

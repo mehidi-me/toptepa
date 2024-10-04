@@ -11,6 +11,7 @@ interface TapState {
         name: string
         profilePicture: any
         fiverrName: string
+        rank: number
     }
 
     setData: (to: {
@@ -19,6 +20,7 @@ interface TapState {
             name: string
             fiverrName: string
             profilePicture: string
+            rank: number
         }
         currentLevel?: "level1" | "level2" | "level3" | "level4" | "level5" | "level5"
         totalScore?: number
@@ -68,7 +70,9 @@ const useTapStore = create<TapState>()(
                 phone: "",
                 name: "",
                 fiverrName: "",
-                profilePicture: ""
+                profilePicture: "",
+                rank: 0
+
             },
 
             gameStarted: false,
