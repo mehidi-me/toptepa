@@ -151,18 +151,20 @@ const checkForLevelUp = () => {
     const currentTapRating = calculateRating(tapCount);
     const levels = Object.entries(settings?.levels)
 
+    let maxLevel = "level1";
     for (const [key, level] of levels) {
         if (totalScore >= level?.nextLevelScore && currentTapRating >= level?.nextLevelTap) {
-            if (currentLevel != level?.nextLevel) {
-                setCurrentLevel(level?.nextLevel);
-                setGamePaused(true)
-                setShowModal(true)
-            }
-        } else if (totalScore < level?.nextLevelScore || currentTapRating < level?.nextLevelTap) {
-            if (currentLevel != key) {
-                setCurrentLevel(key as "level1" | "level2" | "level3" | "level4");
-            }
-            break;
+            maxLevel = level?.nextLevel as "level1" | "level2" | "level3" | "level4";
+        }
+    }
+
+    if (maxLevel != currentLevel) {
+        const tempLevel = currentLevel;
+        setCurrentLevel(maxLevel as "level1" | "level2" | "level3" | "level4");
+
+        if (Number(tempLevel.split("level")[1]) >= Number(tempLevel.split("level")[1])) {
+            setGamePaused(true);
+            setShowModal(true);
         }
     }
 }
