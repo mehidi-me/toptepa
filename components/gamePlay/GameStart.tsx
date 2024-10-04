@@ -19,9 +19,14 @@ export default function GameStart({}: Props) {
   const [fade, setFade] = useState(true);
   const [ending, setEnding] = useState(false);
 
+  const [countAudio] = useState(() => new Audio("/music/1005.MP3"));
+
   const startGameHandler = () => {
     setCount(settings?.countDown);
     setCountStarted(true);
+    setTimeout(() => {
+      countAudio.play();
+    },1000)
   };
 
   useEffect(() => {
@@ -62,6 +67,7 @@ export default function GameStart({}: Props) {
         setTimeout(() => {
           setCount(null);
           setGameStarted(true);
+          countAudio.pause();
         }, 600);
       }, 1000);
 
