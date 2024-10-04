@@ -26,7 +26,9 @@ export default function GameReport() {
       <div className="card">
         <p>Leaderboard</p>
         <div className="rank">
-          <h2>{user?.rank}</h2>
+          <h2 style={{ color: user?.rank > 100 ? "var(--alert)" : "" }}>
+            {user?.rank}
+          </h2>
         </div>
         <h3>Your rank</h3>
       </div>
