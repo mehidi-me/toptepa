@@ -163,6 +163,26 @@ const Home = () => {
     }
   }, [gameStarted, gamePaused, activeDiv, switchInterval]);
 
+  const [backgroundAudio] = useState(() => new Audio("/music/bgm3.MP3"));
+
+ 
+
+  useEffect(() => {
+    if(gameStarted && !gamePaused){
+      backgroundAudio.loop = true;
+      backgroundAudio.play().catch((error) => {
+        console.error("Failed to play background audio:", error);
+      });
+
+      return () => {
+        backgroundAudio.pause();
+      };
+    
+    }else{
+      backgroundAudio.pause();
+    }
+  }, [gameStarted,gamePaused]);
+
   useEffect(() => {
     initializeClientCounts();
   }, [gameStarted]);
