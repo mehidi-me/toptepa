@@ -218,7 +218,7 @@ main.contributor .container {
   position: relative;
 }
 
-.bar-wraper::before {
+/* .bar-wraper::before {
   content: "";
   position: absolute;
   width: 0.5rem;
@@ -230,12 +230,11 @@ main.contributor .container {
   top: 50%;
   transform: translateY(-50%);
   left: calc(70% - 0.7rem);
-}
+} */
 
-.bar-wraper::after {
-  content: "";
+.bar-wraper .bar2 {
   position: absolute;
-  width: 0.5rem;
+  width: 1rem;
   height: calc(100% + 1rem);
   background: var(--success);
   z-index: 2;

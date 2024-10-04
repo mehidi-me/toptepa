@@ -15,11 +15,11 @@ function page() {
           <div className="user-profile">
             <img src="images/zahidul.png" alt="" />
           </div>
-          <p>Chadpur, Bangladesh</p>
+          <p>Chandpur, Bangladesh</p>
         </div>
         <div className="body">
           <h2>MD Zahidul Islam</h2>
-          <p>Mastermind, Fun Guru, Community Menager @Fiverr</p>
+          <p>Mastermind, Fun Guru, Community Manager @Fiverr</p>
         </div>
       </div>
       <div className="block">

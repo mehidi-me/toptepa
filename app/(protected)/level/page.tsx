@@ -47,6 +47,10 @@ export default function Level({}: Props) {
                   <h2>{calculateRating(tapCount)}%</h2>
                 </div>
                 <div className="bar-wraper">
+                  <div
+                    className="bar2"
+                    style={{ left: `calc(${level?.nextLevelTap}% - 0.7rem)` }}
+                  ></div>
                   <div className="progress-bar">
                     <div
                       className="progress"
@@ -60,15 +64,21 @@ export default function Level({}: Props) {
                 </div>
                 <div className="placement">
                   <small>0%</small>
-                  <small>70%</small>
-                  <small>90%</small>
+                  <small
+                    // className="qualify"
+                    style={{ left: `calc(${level?.nextLevelTap}% - 0.7rem)` }}
+                  >
+                    {level?.nextLevelTap}%
+                  </small>
+                  <small></small>
                   <small>100%</small>
                 </div>
               </div>
               <div className="body">
                 <div className="list">
-                  <p>Maintain current level</p>
-                  <p>Quality for next level</p>
+                  <p>
+                    Maintain {level?.nextLevelTap}% tap rating for next level
+                  </p>
                 </div>
                 {calculateRating(tapCount) < level?.nextLevelTap ? (
                   <div className="block alert">
@@ -94,8 +104,7 @@ export default function Level({}: Props) {
               </div>
               <div className="body">
                 <div className="list">
-                  <p>Maintain current level</p>
-                  <p>Quality for next level</p>
+                  <p>Maintain {level?.nextLevelScore} orders for next level</p>
                 </div>
                 {totalScore < level?.nextLevelScore ? (
                   <div className="block alert">

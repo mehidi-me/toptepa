@@ -19,18 +19,16 @@ export default function CharValue({}: Props) {
           {settings?.clientProperties?.client2?.orders}
         </div>
         <div className="chr-profile">
-          <div className="round-pic">
+          <div className="round-pic" style={{ background: "#00FFCC" }}>
             <Image src={Client3} alt="Client3" />
           </div>
-          <span>=</span>
-          +{settings?.clientProperties?.client3?.orders}
+          <span>=</span>+{settings?.clientProperties?.client3?.orders}
         </div>
         <div className="chr-profile">
           <div className="round-pic">
             <Image src={Client1} alt="Client2" />
           </div>
-          <span>=</span>
-          +{settings?.clientProperties?.client1?.orders}
+          <span>=</span>+{settings?.clientProperties?.client1?.orders}
         </div>
       </div>
     </div>

@@ -97,13 +97,13 @@ const Home = () => {
     setTapCount(tapAdjustments);
   };
 
-  const handleMissedTap = (toCheckClients: PositionType[]) => {
-    toCheckClients.forEach((client) => {
-      if (client.clientType === "good") {
-        setTapCount({ byCorrect: 0, byWrong: 0, byMissed: 1 });
-      }
-    });
-  };
+  // const handleMissedTap = (toCheckClients: PositionType[]) => {
+  //   toCheckClients.forEach((client) => {
+  //     if (client.clientType === "good") {
+  //       setTapCount({ byCorrect: 0, byWrong: 0, byMissed: 1 });
+  //     }
+  //   });
+  // };
 
   const switchImage = () => {
     count++;
@@ -134,11 +134,11 @@ const Home = () => {
     const tempClients = selectRandomClients();
     setSelectedClients(tempClients);
 
-    setMissTimer(
-      setTimeout(() => {
-        handleMissedTap(tempClients);
-      }, switchInterval - 500)
-    );
+    // setMissTimer(
+    //   setTimeout(() => {
+    //     handleMissedTap(tempClients);
+    //   }, switchInterval - 500)
+    // );
 
     setActiveDiv(selectedDivIndexes);
   };

@@ -55,6 +55,9 @@ main.level-page {
 .level-flow p {
   font-size: 1rem;
   color: var(--sub-text);
+  white-space: nowrap;
+  word-break: keep-all;
+  width: 100%;
 }
 
 .level-flow .level {
@@ -109,10 +112,6 @@ main.level-page {
   left: 0;
 }
 
-.placement small:nth-child(2) {
-  left: calc(70% - 1rem);
-}
-
 .placement small:nth-child(3) {
   left: calc(90% - 1rem);
 }
@@ -151,7 +150,7 @@ main.level-page {
   height: 100%;
   top: 0;
   left: 0;
-  background: var(--alert);
+  background: var(--primary);
   border-radius: 3rem;
 }
 
