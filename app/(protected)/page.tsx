@@ -10,6 +10,7 @@ import SingleWhole from "@/components/gamePlay/SingleWhole";
 import GameStart from "@/components/gamePlay/GameStart";
 import { StaticImageData } from "next/image";
 import CharValue from "@/components/CharValue";
+import BeforeCloseSave from "@/components/BeforeCloseSave";
 
 export type PositionType = {
   clientType: string;
@@ -165,6 +166,7 @@ const Home = () => {
           paddingTop: countStarted || gameStarted ? "0" : "8rem",
         }}
       >
+        <BeforeCloseSave />
         <div className="container">
           <GameReport />
           <CharValue />
