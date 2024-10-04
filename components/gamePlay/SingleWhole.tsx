@@ -38,7 +38,7 @@ export default function SingleWhole({
   return (
     <>
       <div className={`whole`}>
-        {toActive && (
+        {toActive && selectedClient && (
           <div className="anim-img" onClick={debouncedFunction}>
             <Image priority={true} src={selectedClient.imageSrc} alt="client" />
             {clicked == index && (

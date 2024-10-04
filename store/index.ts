@@ -17,7 +17,7 @@ interface TapState {
         user?: {
             phone: string
             name: string
-            fiverrName:string
+            fiverrName: string
             profilePicture: string
         }
         currentLevel?: "level1" | "level2" | "level3" | "level4"
