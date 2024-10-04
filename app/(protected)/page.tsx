@@ -9,6 +9,7 @@ import useTapStore from "@/store";
 import SingleWhole from "@/components/gamePlay/SingleWhole";
 import GameStart from "@/components/gamePlay/GameStart";
 import { StaticImageData } from "next/image";
+import CharValue from "@/components/CharValue";
 
 export type PositionType = {
   clientType: string;
@@ -165,6 +166,7 @@ const Home = () => {
       >
         <div className="container">
           <GameReport />
+          <CharValue />
           <div className="block game-board">
             <GameStart />
             {Array.from({ length: 9 }, (_, i) => (

@@ -9,7 +9,7 @@
 }
 .user-name input {
   height: 5rem;
-  width: fit-content;
+  width: 90%;
   background: none;
   text-align: center;
   font-size: 2rem;

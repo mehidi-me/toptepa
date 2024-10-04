@@ -20,7 +20,7 @@ interface TapState {
             fiverrName: string
             profilePicture: string
         }
-        currentLevel?: "level1" | "level2" | "level3" | "level4"
+        currentLevel?: "level1" | "level2" | "level3" | "level4" | "level5" | "level5"
         totalScore?: number
         tapCount?: {
             correctTap: number
@@ -46,8 +46,8 @@ interface TapState {
     }
     setTapCount: (by: { byCorrect: number, byWrong: number, byMissed: number }) => void
 
-    currentLevel: "level1" | "level2" | "level3" | "level4";
-    setCurrentLevel: (to: "level1" | "level2" | "level3" | "level4") => void
+    currentLevel: "level1" | "level2" | "level3" | "level4" | "level5";
+    setCurrentLevel: (to: "level1" | "level2" | "level3" | "level4" | "level5") => void
 
     activeDiv: number[],
     setActiveDiv: (to: any) => void,
@@ -116,7 +116,7 @@ const useTapStore = create<TapState>()(
     ),
 )
 
-const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4", tapCount: { correctTap: number, missedTap: number, wrongTap: number }) => {
+const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4" | "level5", tapCount: { correctTap: number, missedTap: number, wrongTap: number }) => {
     await fetch("/auth/update", {
         method: "POST",
         headers: {
@@ -137,7 +137,7 @@ const checkForLevelUp = () => {
         if (totalScore >= level?.nextLevelScore && currentTapRating >= level?.nextLevelTap) {
             setCurrentLevel(level?.nextLevel);
         } else if (totalScore < level?.nextLevelScore || currentTapRating < level?.nextLevelTap) {
-            setCurrentLevel(key as "level1" | "level2" | "level3" | "level4");
+            setCurrentLevel(key as "level1" | "level2" | "level3" | "level4" | "level5" | "level5");
             break;
         }
     }

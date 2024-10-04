@@ -17,7 +17,7 @@ export default function Header({}) {
       <div className="container">
         <div className="greetings">
           <p>
-            Hi <span>{user.name}</span>,
+            Hi Tepa-<span>{user.name}</span>,
           </p>
           <h1>Welcome back</h1>
         </div>

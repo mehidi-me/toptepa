@@ -2,6 +2,7 @@ main.level-page {
   background: var(--secoundary);
   padding: 3rem 0;
 }
+
 .current-level-badge {
   display: flex;
   flex-direction: column;
@@ -9,14 +10,17 @@ main.level-page {
   justify-content: center;
   gap: 1rem;
 }
+
 .current-level-badge img {
   width: unset;
   height: 10rem;
 }
+
 .current-level-badge p {
   font-size: 1.8rem;
   font-weight: 600;
 }
+
 .level-flow {
   display: flex;
   align-items: center;
@@ -28,6 +32,7 @@ main.level-page {
   margin: auto;
   margin-top: 1.5rem;
 }
+
 .level-flow::before {
   content: "";
   position: absolute;
@@ -39,19 +44,23 @@ main.level-page {
   background: var(--bg2);
   z-index: 1;
 }
+
 .level-flow img {
   width: unset;
   height: 4rem;
   position: relative;
   z-index: 2;
 }
+
 .level-flow p {
   font-size: 1rem;
   color: var(--sub-text);
 }
+
 .level-flow .level {
   position: relative;
 }
+
 .level.active::before {
   content: "";
   position: absolute;
@@ -63,25 +72,31 @@ main.level-page {
   left: 50%;
   transform: translateX(-50%);
 }
+
 .level-flow .level img {
   filter: grayscale(1) brightness(0.5);
 }
+
 .level.active img {
   filter: grayscale(0);
 }
+
 .gap-1 {
   display: grid;
   gap: 1rem;
   margin-top: 2rem;
 }
+
 .block .header {
   padding-bottom: 1.5rem;
   border-bottom: var(--border);
 }
+
 .block .placement {
   position: relative;
   padding-bottom: 2rem;
 }
+
 .placement small {
   display: block;
   position: absolute;
@@ -89,36 +104,46 @@ main.level-page {
   font-size: 1rem;
   color: var(--sub-text);
 }
+
 .placement small:nth-child(1) {
   left: 0;
 }
+
 .placement small:nth-child(2) {
   left: calc(70% - 1rem);
 }
+
 .placement small:nth-child(3) {
   left: calc(90% - 1rem);
 }
+
 .placement small:nth-child(4) {
   left: calc(100% - 2rem);
 }
+
 .block .header .progress-bar {
   margin-top: 1rem;
 }
+
 .block .body {
   margin-top: 1.5rem;
 }
+
 .block .body p {
   color: var(--sub-text);
 }
+
 .block .list {
   display: grid;
   gap: 1rem;
 }
+
 .block .list p {
   position: relative;
   padding: 0.3rem 0;
   padding-left: 2rem;
 }
+
 .block .list p::before {
   content: "";
   position: absolute;
@@ -129,9 +154,11 @@ main.level-page {
   background: var(--alert);
   border-radius: 3rem;
 }
+
 .block .list p:nth-child(2):before {
   background: var(--success);
 }
+
 .block .block {
   background: #0e4d2f;
   display: grid;
@@ -140,12 +167,15 @@ main.level-page {
   gap: 0.5rem;
   margin-top: 1.5rem;
 }
+
 .block .block p {
   color: var(--primary-text);
 }
+
 .block .block i {
   font-size: 2rem;
 }
+
 .block .block.alert {
   background: var(--alert);
 }

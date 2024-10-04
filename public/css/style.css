@@ -348,7 +348,7 @@ main.contributor .container {
 }
 
 .anim-img {
-  padding: 2rem;
+  padding-top: 1rem;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -491,10 +491,6 @@ main.contributor .container {
 
   .block.report .card h2 {
     font-size: 2.3rem;
-  }
-
-  .anim-img {
-    padding: 2rem;
   }
 
   .whole p {

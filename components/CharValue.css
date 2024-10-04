@@ -1,0 +1,43 @@
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.chr-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg2);
+    padding: 0.5rem;
+    font-size: 1.6rem;
+    color: white;
+    font-weight: 600;
+    padding-right: 1rem;
+    border-radius: 1rem;
+}
+
+.chr-profile .round-pic {
+    width: 4rem;
+    aspect-ratio: 1/1;
+    border-radius: 0.5rem;
+    background: var(--primary);
+    overflow: hidden;
+}
+
+.chr-profile.alert .round-pic {
+    background: var(--alert);
+}
+
+.chr-profile.alert {
+    color: var(--alert);
+}
+
+.round-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chr-profile :is(span) {
+    font-size: 3rem;
+}
