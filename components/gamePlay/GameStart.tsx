@@ -6,8 +6,14 @@ import React, { useEffect, useState } from "react";
 type Props = {};
 
 export default function GameStart({}: Props) {
-  const { gameStarted, countStarted, setCountStarted, setGameStarted } =
-    useTapStore((state) => state);
+  const {
+    gameStarted,
+    gamePaused,
+    countStarted,
+    setCountStarted,
+    setGameStarted,
+    setGamePaused,
+  } = useTapStore((state) => state);
   const [count, setCount] = useState<any>(-1);
   const [fade, setFade] = useState(true);
   const [ending, setEnding] = useState(false);
@@ -62,15 +68,15 @@ export default function GameStart({}: Props) {
     }
   }, [count]);
 
-  useEffect(() => {
-    if (gameStarted) {
-      setTimeout(() => {
-        setEnding(true);
-        setCount(3);
-        setCountStarted(true);
-      }, settings?.gameDuration - 3800);
-    }
-  }, [gameStarted]);
+  // useEffect(() => {
+  //   if (gameStarted) {
+  //     setTimeout(() => {
+  //       setEnding(true);
+  //       setCount(3);
+  //       setCountStarted(true);
+  //     }, settings?.gameDuration - 3800);
+  //   }
+  // }, [gameStarted]);
 
   return (
     <React.Fragment>
@@ -90,6 +96,11 @@ export default function GameStart({}: Props) {
       {!countStarted && (
         <div className="start">
           <button onClick={startGameHandler}>Start</button>
+        </div>
+      )}
+      {gameStarted && gamePaused && (
+        <div className="start">
+          <button onClick={() => setGamePaused(false)}>Resume</button>
         </div>
       )}
     </React.Fragment>

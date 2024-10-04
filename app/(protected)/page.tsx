@@ -22,6 +22,7 @@ let count = 0;
 const Home = () => {
   const {
     gameStarted,
+    gamePaused,
     setTapCount,
     countStarted,
     setTotalScore,
@@ -144,11 +145,11 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (gameStarted) {
+    if (gameStarted && !gamePaused) {
       const interval = setInterval(switchImage, switchInterval);
       return () => clearInterval(interval);
     }
-  }, [gameStarted, activeDiv, switchInterval]);
+  }, [gameStarted, gamePaused, activeDiv, switchInterval]);
 
   useEffect(() => {
     initializeClientCounts();

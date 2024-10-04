@@ -5,15 +5,15 @@ import useTapStore from "@/store";
 import { calculateRating } from "@/lib/utils";
 import Link from "next/link";
 
-
 export default function GameReport() {
-  const { totalScore, currentLevel, tapCount } = useTapStore((state) => state);
+  const { totalScore, currentLevel, tapCount, setGamePaused } = useTapStore(
+    (state) => state
+  );
   const level = settings?.levels?.[currentLevel];
 
   return (
     <div className="block report">
       <Link href={"/level"} className="card">
-     
         <p>Your Level</p>
         <div className="level">
           <Image
@@ -23,7 +23,6 @@ export default function GameReport() {
           />
         </div>
         <h3>{level?.label}</h3>
-      
       </Link>
       <div className="card">
         <p>Leaderboard</p>
@@ -57,6 +56,7 @@ export default function GameReport() {
           </div>
         </div>
       </div>
+      <button onClick={() => setGamePaused(true)}>Pause</button>
     </div>
   );
 }

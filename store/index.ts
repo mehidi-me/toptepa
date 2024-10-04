@@ -33,6 +33,9 @@ interface TapState {
     gameStarted: boolean
     setGameStarted: (to: boolean) => void
 
+    gamePaused: boolean
+    setGamePaused: (to: boolean) => void
+
     countStarted: boolean
     setCountStarted: (to: boolean) => void
 
@@ -71,12 +74,18 @@ const useTapStore = create<TapState>()(
             gameStarted: false,
             setGameStarted: (to) => set((state) => ({ gameStarted: to })),
 
+            gamePaused: false,
+            setGamePaused: (to) => set((state) => {
+                saveToDB(state.totalScore, state.currentLevel, state.tapCount);
+                return ({ gamePaused: to })
+            }),
+
             countStarted: false,
             setCountStarted: (to) => set((state) => ({ countStarted: to })),
 
             totalScore: 0,
             setTotalScore: (by) => set((state) => {
-                saveToDB(state.totalScore + by, state.currentLevel, state.tapCount)
+                // saveToDB(state.totalScore + by, state.currentLevel, state.tapCount)
                 checkForLevelUp()
                 return ({ totalScore: state.totalScore + by })
             }),
@@ -93,7 +102,7 @@ const useTapStore = create<TapState>()(
                     missedTap: state.tapCount.missedTap + Number(by.byMissed)
                 }
 
-                saveToDB(state.totalScore, state.currentLevel, updatedTapCount)
+                // saveToDB(state.totalScore, state.currentLevel, updatedTapCount)
 
                 checkForLevelUp()
                 return ({
@@ -128,16 +137,19 @@ const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | 
 }
 
 const checkForLevelUp = () => {
-    const { totalScore, tapCount, setCurrentLevel } = useTapStore.getState();
+    const { totalScore, tapCount, setCurrentLevel, currentLevel } = useTapStore.getState();
     const currentTapRating = calculateRating(tapCount);
-
     const levels = Object.entries(settings?.levels)
 
     for (const [key, level] of levels) {
         if (totalScore >= level?.nextLevelScore && currentTapRating >= level?.nextLevelTap) {
-            setCurrentLevel(level?.nextLevel);
+            if (currentLevel != level?.nextLevel) {
+                setCurrentLevel(level?.nextLevel);
+            }
         } else if (totalScore < level?.nextLevelScore || currentTapRating < level?.nextLevelTap) {
-            setCurrentLevel(key as "level1" | "level2" | "level3" | "level4" | "level5" | "level5");
+            if (currentLevel != key) {
+                setCurrentLevel(key as "level1" | "level2" | "level3" | "level4" | "level5" | "level5");
+            }
             break;
         }
     }
