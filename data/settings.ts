@@ -8,7 +8,7 @@ import Level2 from "@/public/images/tepa.svg";
 import Level3 from "@/public/images/tepaking.svg";
 import Level4 from "@/public/images/top.svg";
 
-export type Level = "level1" | "level2" | "level3" | "level4" | "level5" | "level5";
+export type Level = "level1" | "level2" | "level3" | "level4";
 
 const clientProperties = {
     client1: {
@@ -77,17 +77,17 @@ const settings = {
             nextLevelTap: 110,
             nextLevel: "level4" as Level,
         },
-        level5: {
-            label: "Top Tepa",
-            icon: Level4,
-            totalClient: 55,
-            client2Count: 0,
-            client3Count: 27,
-            clientDuration: 1300,
-            nextLevelScore: 10000000000,
-            nextLevelTap: 110,
-            nextLevel: "level5" as Level,
-        }
+        // level5: {
+        //     label: "Top Tepa",
+        //     icon: Level4,
+        //     totalClient: 55,
+        //     client2Count: 0,
+        //     client3Count: 27,
+        //     clientDuration: 1300,
+        //     nextLevelScore: 10000000000,
+        //     nextLevelTap: 110,
+        //     nextLevel: "level5" as Level,
+        // }
     }
 }
 

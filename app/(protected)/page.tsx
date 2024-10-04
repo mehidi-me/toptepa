@@ -11,6 +11,7 @@ import GameStart from "@/components/gamePlay/GameStart";
 import { StaticImageData } from "next/image";
 import CharValue from "@/components/CharValue";
 import BeforeCloseSave from "@/components/BeforeCloseSave";
+import LevelUpModal from "@/components/LevelUpModal";
 
 export type PositionType = {
   clientType: string;
@@ -30,6 +31,7 @@ const Home = () => {
     activeDiv,
     setActiveDiv,
     currentLevel,
+    showModal,
   } = useTapStore((state) => state);
 
   const switchInterval =
@@ -185,6 +187,7 @@ const Home = () => {
               />
             ))}
           </div>
+          {showModal && <LevelUpModal />}
         </div>
       </main>
       <Footer />

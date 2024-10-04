@@ -22,7 +22,7 @@ interface TapState {
             profilePicture: string
             rank: number
         }
-        currentLevel?: "level1" | "level2" | "level3" | "level4" | "level5" | "level5"
+        currentLevel?: "level1" | "level2" | "level3" | "level4"
         totalScore?: number
         tapCount?: {
             correctTap: number
@@ -38,6 +38,9 @@ interface TapState {
     gamePaused: boolean
     setGamePaused: (to: boolean) => void
 
+    showModal: boolean
+    setShowModal: (to: boolean) => void
+
     countStarted: boolean
     setCountStarted: (to: boolean) => void
 
@@ -51,8 +54,8 @@ interface TapState {
     }
     setTapCount: (by: { byCorrect: number, byWrong: number, byMissed: number }) => void
 
-    currentLevel: "level1" | "level2" | "level3" | "level4" | "level5";
-    setCurrentLevel: (to: "level1" | "level2" | "level3" | "level4" | "level5") => void
+    currentLevel: "level1" | "level2" | "level3" | "level4";
+    setCurrentLevel: (to: "level1" | "level2" | "level3" | "level4") => void
 
     activeDiv: number[],
     setActiveDiv: (to: any) => void,
@@ -83,6 +86,9 @@ const useTapStore = create<TapState>()(
                 saveToDB(state.totalScore, state.currentLevel, state.tapCount);
                 return ({ gamePaused: to })
             }),
+
+            showModal: false,
+            setShowModal: (to) => set((state) => ({ showModal: to })),
 
             countStarted: false,
             setCountStarted: (to) => set((state) => ({ countStarted: to })),
@@ -129,7 +135,7 @@ const useTapStore = create<TapState>()(
     ),
 )
 
-const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4" | "level5", tapCount: { correctTap: number, missedTap: number, wrongTap: number }) => {
+const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4", tapCount: { correctTap: number, missedTap: number, wrongTap: number }) => {
     await fetch("/auth/update", {
         method: "POST",
         headers: {
@@ -141,7 +147,7 @@ const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | 
 }
 
 const checkForLevelUp = () => {
-    const { totalScore, tapCount, setCurrentLevel, currentLevel } = useTapStore.getState();
+    const { totalScore, tapCount, setCurrentLevel, currentLevel, setGamePaused, setShowModal } = useTapStore.getState();
     const currentTapRating = calculateRating(tapCount);
     const levels = Object.entries(settings?.levels)
 
@@ -149,10 +155,12 @@ const checkForLevelUp = () => {
         if (totalScore >= level?.nextLevelScore && currentTapRating >= level?.nextLevelTap) {
             if (currentLevel != level?.nextLevel) {
                 setCurrentLevel(level?.nextLevel);
+                setGamePaused(true)
+                setShowModal(true)
             }
         } else if (totalScore < level?.nextLevelScore || currentTapRating < level?.nextLevelTap) {
             if (currentLevel != key) {
-                setCurrentLevel(key as "level1" | "level2" | "level3" | "level4" | "level5" | "level5");
+                setCurrentLevel(key as "level1" | "level2" | "level3" | "level4");
             }
             break;
         }

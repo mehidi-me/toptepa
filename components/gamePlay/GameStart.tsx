@@ -2,6 +2,7 @@
 import settings from "@/data/settings";
 import useTapStore from "@/store";
 import React, { useEffect, useState } from "react";
+import LevelUpModal from "../LevelUpModal";
 
 type Props = {};
 
