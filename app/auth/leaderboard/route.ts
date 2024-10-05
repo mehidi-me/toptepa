@@ -5,7 +5,7 @@ import User from '@/models/User';
 export async function GET(req: NextRequest) {
     await connectDB();
     
-    const users = await User.find({}).select(['name', 'totalScore', 'tapCount', 'profilePicture']).sort({ totalScore: -1 }).limit(100).lean();
+    const users = await User.find({}).select(['name', 'totalScore', 'tapCount', 'profilePicture']).sort({ totalScore: -1 }).limit(100);
 
     if (!users) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });

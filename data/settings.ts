@@ -8,23 +8,27 @@ import Level2 from "@/public/images/tepa.svg";
 import Level3 from "@/public/images/tepaking.svg";
 import Level4 from "@/public/images/top.svg";
 
+
 export type Level = "level1" | "level2" | "level3" | "level4";
 
 const clientProperties = {
     client1: {
         clientType: "good",
         orders: 2,
-        imageSrc: Client1
+        imageSrc: Client1,
+        audio_type: typeof window !== "undefined" ? new Audio("/music/normal-order.MP3") : null
     },
     client2: {
         clientType: "bad",
         orders: -1,
-        imageSrc: Client2
+        imageSrc: Client2,
+        audio_type: typeof window !== "undefined" ? new Audio("/music/boom.MP3") : null
     },
     client3: {
         clientType: "good",
         orders: 10,
-        imageSrc: Client3
+        imageSrc: Client3,
+        audio_type: typeof window !== "undefined" ? new Audio("/music/bonus-order.MP3") : null
     }
 }
 
@@ -62,7 +66,7 @@ const settings = {
             client2Count: 9,
             client3Count: 7,
             clientDuration: 1300,
-            nextLevelScore: 10000,
+            nextLevelScore: 50000,
             nextLevelTap: 85,
             nextLevel: "level4" as Level,
         },

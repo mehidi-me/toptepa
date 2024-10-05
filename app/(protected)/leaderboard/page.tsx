@@ -30,6 +30,7 @@ export default function page({}: Props) {
     try {
       const res = await fetch("/auth/leaderboard" + `?page=${page}&limit=20`, {
         method: "GET",
+        cache: 'no-store'
       });
       const data = await res.json();
       if (data.success) {

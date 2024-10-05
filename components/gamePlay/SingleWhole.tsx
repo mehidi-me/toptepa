@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { PositionType } from "@/app/(protected)/page";
 import settings from "@/data/settings";
 import useTapStore from "@/store";
@@ -25,12 +25,25 @@ export default function SingleWhole({
   missTimer,
 }: Props) {
   const { currentLevel } = useTapStore((state) => state);
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+
+   const playAudio = (audio: HTMLAudioElement) => {
+     if (currentAudio) {
+       currentAudio.pause();
+       currentAudio.currentTime = 0;
+     }
+     audio.play().catch((error) => {
+       console.error("Failed to play audio:", error);
+     });
+     setCurrentAudio(audio);
+   };
 
   const debouncedFunction = useCallback(
     debounce(() => {
       clearTimeout(missTimer);
       setClicked(index);
       handleTap(selectedClient);
+      playAudio(selectedClient.audio_type);
     }, 200),
     [missTimer, index, selectedClient]
   );
