@@ -7,7 +7,6 @@ WORKDIR /app
 # Copy the package.json and package-lock.json files into the image.
 COPY package*.json ./
 
-
 # Install the dependencies.
 RUN npm install
 
@@ -17,5 +16,5 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 3000
 
-# Run the application.
-CMD npm run dev
+# Run the application and bind it to 0.0.0.0
+CMD ["npm", "run", "dev", "--", "-H", "0.0.0.0"]
