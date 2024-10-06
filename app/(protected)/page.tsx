@@ -100,7 +100,7 @@ const Home = () => {
 
   const handleTap = (selectedClient: PositionType) => {
     const scoreAdjustment =
-      selectedClient.clientType === "good" ? selectedClient.orders : -1;
+      selectedClient.clientType === "good" ? selectedClient.orders : -20;
     const tapAdjustments =
       selectedClient.clientType === "good"
         ? { byCorrect: 1, byWrong: 0, byMissed: 0 }
