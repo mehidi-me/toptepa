@@ -75,6 +75,12 @@ export default function page({}: Props) {
     <main className="form">
       <div className="container">
         <div className="block">
+          <div>
+            <p style={{marginBottom: '3rem',
+color: '#d9a2a2',
+textAlign: 'center',
+lineHeight: '1.5'}}>Please provide a valid phone number to confirm the winner at the end of the contest. Your data will be securely protected by the community.</p>
+          </div>
           <h2 className="title">Register</h2>
           <form onSubmit={handleRegister}>
             <div className="profile-input">
