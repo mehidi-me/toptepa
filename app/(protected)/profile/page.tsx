@@ -155,7 +155,7 @@ export default function page({}: Props) {
             </button>
           </div>
 
-          <h2 className="title">Contest</h2>
+          {/* <h2 className="title">Contest</h2>
           <div className="block">
             {user?.fiverrName ? (
               <h1>You are in🐰</h1>
@@ -174,7 +174,7 @@ export default function page({}: Props) {
                 <button onClick={saveHandler2}>Join Contest</button>
               </>
             )}
-          </div>
+          </div> */}
         </div>
       </main>
 

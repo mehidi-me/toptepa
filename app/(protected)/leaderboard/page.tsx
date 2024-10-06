@@ -1,5 +1,5 @@
 "use client";
-
+export const dynamic = "force-dynamic";
 import Footer from "@/components/root/Footer";
 import Image from "next/image";
 import loadingImage from "@/public/images/loading.gif";
@@ -28,7 +28,7 @@ export default function page({}: Props) {
   const fetchItems = async (page: number) => {
     setLoading(true);
     try {
-      const res = await fetch("/auth/leaderboard" + `?page=${page}&limit=20`, {
+      const res = await fetch("/auth/leaderboard", {
         method: "GET",
         cache: 'no-store'
       });

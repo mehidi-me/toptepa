@@ -20,7 +20,7 @@ const clientProperties = {
     },
     client2: {
         clientType: "bad",
-        orders: -1,
+        orders: -20,
         imageSrc: Client2,
         audio_type: typeof window !== "undefined" ? new Audio("/music/boom.MP3") : null
     },
