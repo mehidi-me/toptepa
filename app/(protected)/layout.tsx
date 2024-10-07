@@ -23,6 +23,7 @@ export default function RootLayout({
         });
         const data = await res.json();
         if (data.success) {
+          data.user.tapCount = typeof data.user.tapCount === 'string' ? JSON.parse(data.user.tapCount) : data.user.tapCount;
           setData({
             user: {
               phone: data.user.phone,
