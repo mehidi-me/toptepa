@@ -16,11 +16,8 @@ const debounce = (func: Function, delay: number) => {
     };
 };
 
-const calculateRating = (tapCount: {
-    correctTap: number;
-    missedTap: number;
-    wrongTap: number;
-}) => {
+const calculateRating = (tapCountAny: any) => {
+    const tapCount = typeof tapCountAny === 'string' ? JSON.parse(tapCountAny) : tapCountAny;
     const totalTaps =
         tapCount.correctTap + tapCount.missedTap + tapCount.wrongTap;
     let ratingPercentage = 0;
