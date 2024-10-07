@@ -90,7 +90,7 @@ User2.init({
         defaultValue: '#1dbf73',
     },
     profilePicture: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT('long'),
     },
 }, {
     sequelize,
