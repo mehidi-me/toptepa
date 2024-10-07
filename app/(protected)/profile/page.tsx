@@ -33,7 +33,8 @@ export default function page({}: Props) {
 
   const saveHandler = async () => {
     if (name.length > 0 && themeColorValue.length > 0) {
-      await fetch("/auth/update", {
+     try {
+    const res =  await fetch("/auth/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,14 +45,25 @@ export default function page({}: Props) {
           profilePicture: file,
         }),
       });
-      setData({
-        user: { ...user, name, profilePicture: file },
-        themeColor: themeColorValue,
-      });
-      document.documentElement.style.setProperty("--primary", themeColorValue);
-      setEditName(false);
-      setUnsaved(false);
-      toast.success("Saved Changes!");
+      const data = await res.json();
+      if(data.error){
+        toast.error(data.error);
+        setFile(null);
+      }else{
+        setData({
+          user: { ...user, name, profilePicture: file },
+          themeColor: themeColorValue,
+        });
+        document.documentElement.style.setProperty("--primary", themeColorValue);
+        setEditName(false);
+        setUnsaved(false);
+        toast.success("Saved Changes!");
+      }
+     
+     } catch (error) {
+      toast.error("Try Again!");
+      console.log(error);
+     }
     }
   };
   const saveHandler2 = async () => {

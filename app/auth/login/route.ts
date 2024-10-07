@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import User from '@/models/User';
+import User2 from '@/models/User2';
 import { signToken } from '@/lib/jwt';
 import { serialize } from 'cookie';
 
 export async function POST(req: Request) {
-    await connectDB();
+
 
     const { phone, password } = await req.json();
 
@@ -14,7 +13,7 @@ export async function POST(req: Request) {
     }
 
     // Find user by phone
-    const user = await User.findOne({ phone });
+    const user = await User2.findOne({ where: { phone } });
     if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -26,11 +25,11 @@ export async function POST(req: Request) {
     }
 
     // Generate JWT token
-    const token = await signToken({ id: user._id.toString() });
+    const token = await signToken({ id: user.id }); // Use `user.id` instead of `user._id`
     const cookie = serialize('auth', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 30 * 24 * 60 * 60,
+        maxAge: 30 * 24 * 60 * 60, // 30 days
         path: '/',
     });
 
@@ -43,5 +42,4 @@ export async function POST(req: Request) {
             'Access-Control-Allow-Origin': '*',
         },
     });
-
 }
