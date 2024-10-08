@@ -30,11 +30,11 @@ export default function Footer({}: Props) {
             <i className="uil uil-list-ol-alt" />
           </div>
         </Link>
-        <Link href={"/"}>
+        <a href={"/"}>
           <div className={`ico order ${pathname === "/" ? "" : ""}`}>
             <i className="uil uil-clipboard-notes" />
           </div>
-        </Link>
+        </a>
         <Link href={"/notifications"}>
           <div
             className={`ico ${pathname === "/notifications" ? "active" : ""}`}

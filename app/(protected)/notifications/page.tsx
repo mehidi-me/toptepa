@@ -12,37 +12,53 @@ export default function page({}: Props) {
           <div className="block">
             <div className="header">
               <div className="flex">
-                <p>About IFD 2024</p>
-                <h3>24.09.2024</h3>
+                <p>🏆 টপ টেপা গেম - বিশেষ ঘোষণা 🏆</p>
+                {/* <h3>24.09.2024</h3> */}
               </div>
             </div>
             <div className="body">
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa,
-                quas sint illo autem velit quisquam nobis beatae facere quod
-                modi cumque placeat maxime consequatur exercitationem numquam
-                temporibus porro a id.
+                ইন্টারন্যাশনাল ফ্রিল্যান্সার ডে উপলক্ষে, আমরা লিডারবোর্ডের টপ ১০
+                খেলোয়াড়কে দিচ্ছি স্পেশাল গিফট 🎁 
+                <br />
+                <br />
+                এখনই খেলা শুরু করে বিশেষ পুরস্কার জিতে নিন! 🏅
               </p>
-              <button>Get Rush Time</button>
+              {/* <button>Get Rush Time</button> */}
             </div>
           </div>
           <div className="block">
             <div className="header">
               <div className="flex">
-                <p>About IFD 2024</p>
-                <h3>24.09.2024</h3>
+                <p>প্রতিযোগিতার সময়সীমা</p>
+                {/* <h3>24.09.2024</h3> */}
               </div>
             </div>
             <div className="body">
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa,
-                quas sint illo autem velit quisquam nobis beatae facere quod
-                modi cumque placeat maxime consequatur exercitationem numquam
-                temporibus porro a id.
+              গেমটি চলছে ১৭ তারিখ পর্যন্ত ইন্টারন্যাশনাল ফ্রিল্যান্সার ডে উপলক্ষে, তাই এখনই অংশ নিন! লিডার বোর্ডে থাকা সর্বোচ্চ ১০ জন স্কোরার পাবেন আমাদের বিশেষ পুরস্কার!
+
               </p>
-              <button className="expired" disabled>
+              {/* <button className="expired" disabled>
                 Expired
-              </button>
+              </button> */}
+            </div>
+          </div>
+          <div className="block">
+            <div className="header">
+              <div className="flex">
+                <p>ডেটা সুরক্ষা</p>
+                {/* <h3>24.09.2024</h3> */}
+              </div>
+            </div>
+            <div className="body">
+              <p>
+              ফোন নাম্বার শুধুমাত্র ভেরিফিকেশনের জন্য নেওয়া হচ্ছে, এটি কোন প্রকার প্রমোশনাল কাজে ব্যবহার করা হবে না। বিজয়ী ঘোষণার পর আমাদের ডেটাবেজ সম্পূর্ণভাবে ডিলিট করা হবে, তাই আপনার ডেটা সুরক্ষিত থাকবে।
+
+              </p>
+              {/* <button className="expired" disabled>
+                Expired
+              </button> */}
             </div>
           </div>
         </div>

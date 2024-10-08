@@ -79,7 +79,7 @@ export default function page({}: Props) {
             <p style={{marginBottom: '3rem',
 color: '#d9a2a2',
 textAlign: 'center',
-lineHeight: '1.5'}}>Please provide a valid phone number to confirm the winner at the end of the contest. Your data will be securely protected by the community.</p>
+lineHeight: '1.5'}}><b style={{color: '#d9a2a2'}}>ডেটা সুরক্ষা:</b> ফোন নাম্বার শুধুমাত্র ভেরিফিকেশনের জন্য নেওয়া হচ্ছে, এটি কোন প্রকার প্রমোশনাল কাজে ব্যবহার করা হবে না। বিজয়ী ঘোষণার পর আমাদের ডেটাবেজ সম্পূর্ণভাবে ডিলিট করা হবে, তাই আপনার ডেটা সুরক্ষিত থাকবে।</p>
           </div>
           <h2 className="title">Register</h2>
           <form onSubmit={handleRegister}>
