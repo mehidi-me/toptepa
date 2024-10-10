@@ -93,32 +93,36 @@ export default function Level({}: Props) {
                 )}
               </div>
             </div>
-            <div className="block">
-              <div className="header">
-                <div className="flex">
-                  <p>Top Tepa Orders</p>
-                  <h3>
-                    <span>{totalScore}</span> / {level?.nextLevelScore}
-                  </h3>
+            {level?.label != "Top Tepa" ? (
+              <div className="block">
+                <div className="header">
+                  <div className="flex">
+                    <p>Top Tepa Orders</p>
+                    <h3>
+                      <span>{totalScore}</span> / {level?.nextLevelScore}
+                    </h3>
+                  </div>
+                </div>
+                <div className="body">
+                  <div className="list">
+                    <p>
+                      Maintain {level?.nextLevelScore} orders for next level
+                    </p>
+                  </div>
+                  {totalScore < level?.nextLevelScore ? (
+                    <div className="block alert">
+                      <i className="uil uil-multiply" />
+                      <p>Qualified for next level</p>
+                    </div>
+                  ) : (
+                    <div className="block">
+                      <i className="uil uil-check" />
+                      <p>Qualified for next level</p>
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className="body">
-                <div className="list">
-                  <p>Maintain {level?.nextLevelScore} orders for next level</p>
-                </div>
-                {totalScore < level?.nextLevelScore ? (
-                  <div className="block alert">
-                    <i className="uil uil-multiply" />
-                    <p>Qualified for next level</p>
-                  </div>
-                ) : (
-                  <div className="block">
-                    <i className="uil uil-check" />
-                    <p>Qualified for next level</p>
-                  </div>
-                )}
-              </div>
-            </div>
+            ) : null}
           </div>
         </div>
       </section>
