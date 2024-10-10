@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
     // Fetch users from the database, sorting by `totalScore` and limiting to 100 results
     const users = await User.findAll({
-        attributes: ['name', 'totalScore', 'tapCount'], // Select the required fields
+        attributes: ['id','name', 'totalScore', 'tapCount'], // Select the required fields
         order: [['totalScore', 'DESC']], // Sort by totalScore in descending order
         limit: 100, // Limit to 100 users
     });

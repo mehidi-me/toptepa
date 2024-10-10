@@ -14,6 +14,7 @@ export default function page({}: Props) {
   const observerRef = useRef(null);
   const [users, setUsers] = useState<
     {
+      id: number;
       name: string;
       profilePicture: string;
       totalScore: number;
@@ -30,7 +31,7 @@ export default function page({}: Props) {
     try {
       const res = await fetch("/auth/leaderboard", {
         method: "GET",
-        cache: 'no-store'
+        cache: "no-store",
       });
       const data = await res.json();
       if (data.success) {
@@ -47,6 +48,34 @@ export default function page({}: Props) {
   useEffect(() => {
     fetchItems(page);
   }, []);
+
+  const [imagesFetched, setImagesFetched] = useState(false); // Track if images are fetched
+
+  useEffect(() => {
+    const updateUserProfilePicture = async (user) => {
+      const res = await fetch(`/auth/user-image?id=${user.id}`, {
+        method: "GET",
+        cache: "no-store",
+      });
+      const data = await res.json();
+  
+      // Update the user in the state with the profile picture
+      setUsers((prevUsers) =>
+        prevUsers.map((u) =>
+          u.id === user.id ? { ...u, profilePicture: data.user?.profilePicture } : u
+        )
+      );
+    };
+
+    // Only run this effect once, when the users are first loaded
+    if (users.length > 0 && !imagesFetched) {
+      users.forEach(user => {
+        updateUserProfilePicture(user);
+      });
+      setImagesFetched(true); // Set the flag to true after images are fetched
+    }
+  }, [users, imagesFetched]); 
+  
 
   return (
     <React.Fragment>

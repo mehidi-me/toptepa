@@ -9,7 +9,7 @@ type Props = {};
 
 export default function CharValue({}: Props) {
   return (
-    <div className="block">
+    <div className="">
       <div className="grid-3">
         <div className="chr-profile alert">
           <div className="round-pic">

@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--bg2);
+    background: var(--secoundary);
     padding: 0.5rem;
     font-size: 1.6rem;
     color: white;
