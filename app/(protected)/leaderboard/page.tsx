@@ -52,7 +52,7 @@ export default function page({}: Props) {
   const [imagesFetched, setImagesFetched] = useState(false); // Track if images are fetched
 
   useEffect(() => {
-    const updateUserProfilePicture = async (user) => {
+    const updateUserProfilePicture = async (user:any) => {
       const res = await fetch(`/auth/user-image?id=${user.id}`, {
         method: "GET",
         cache: "no-store",
