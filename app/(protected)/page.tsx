@@ -29,6 +29,7 @@ const Home = () => {
     setTapCount,
     countStarted,
     setTotalScore,
+    setDailyCorrectTapCount,
     activeDiv,
     setActiveDiv,
     currentLevel,
@@ -105,9 +106,14 @@ const Home = () => {
       selectedClient.clientType === "good"
         ? { byCorrect: 1, byWrong: 0, byMissed: 0 }
         : { byCorrect: 0, byWrong: 1, byMissed: 0 };
+    const tapAdjustments2 =
+      selectedClient.clientType === "good"
+        ? 1
+        : 0;
 
     setTotalScore(scoreAdjustment);
     setTapCount(tapAdjustments);
+    setDailyCorrectTapCount(tapAdjustments2)
   };
 
   // const handleMissedTap = (toCheckClients: PositionType[]) => {

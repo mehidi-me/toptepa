@@ -2,6 +2,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '@/lib/sequelize';
 import bcrypt from 'bcryptjs';
+import Winner from './Winner';
 
 interface UserAttributes {
     id: number;  // Include id as a required attribute
@@ -11,6 +12,7 @@ interface UserAttributes {
     password: string;
     currentLevel: 'level1' | 'level2' | 'level3' | 'level4';
     totalScore?: number;
+    dailyCorrectTapCount?: number;
     tapCount?: {
         correctTap: number;
         missedTap: number;
@@ -32,6 +34,7 @@ class User2 extends Model<UserAttributes, UserCreationAttributes> implements Use
     public password!: string;
     public currentLevel!: 'level1' | 'level2' | 'level3' | 'level4';
     public totalScore!: number;
+    public dailyCorrectTapCount!: number;
     public tapCount!: {
         correctTap: number;
         missedTap: number;
@@ -78,6 +81,10 @@ User2.init({
         defaultValue: 'level1',
     },
     totalScore: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+    },
+    dailyCorrectTapCount: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
     },

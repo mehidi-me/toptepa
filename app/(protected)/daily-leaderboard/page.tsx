@@ -18,25 +18,30 @@ export default function page({}: Props) {
       id: number;
       name: string;
       profilePicture: string;
-      totalScore: number;
-      tapCount: {
-        correctTap: number;
-        missedTap: number;
-        wrongTap: number;
-      };
+      dailyCorrectTapCount: number;
+    }[]
+  >([]);
+  const [winners, setWinners] = useState<
+    {
+      id: number;
+      name: string;
+      profilePicture: string;
+      totalTap: number;
+      updatedAt:string
     }[]
   >([]);
 
   const fetchItems = async (page: number) => {
     setLoading(true);
     try {
-      const res = await fetch("/auth/leaderboard", {
+      const res = await fetch("/auth/daily-leaderboard", {
         method: "GET",
         cache: "no-store",
       });
       const data = await res.json();
       if (data.success) {
         setUsers(data.users);
+        setWinners(data.winners);
       }
     } catch (error) {
       console.log(error);
@@ -77,7 +82,14 @@ export default function page({}: Props) {
     }
   }, [users, imagesFetched]); 
   
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+    return date.toLocaleDateString('en-GB', options);
+  }
+  
 
+  
   return (
     <React.Fragment>
       <main className="mt-2 leaderboard">
@@ -98,19 +110,21 @@ export default function page({}: Props) {
           </div>
         )}
         <div className="container">
-          <div className="toggle-btn">
-                <Link href={'/leaderboard'}><button className="active">Main Leader Board</button></Link>
-                <Link href={'/daily-leaderboard'}><button>Daily Leader Board</button></Link>
+        <div className="toggle-btn">
+                <Link href={'/leaderboard'}><button>Main Leader Board</button></Link>
+                <Link href={'/daily-leaderboard'} ><button className="active">Daily Leader Board</button></Link>
             </div>
-          <h2 className="title">Main Leader board</h2>
-          <div className="block">
+          <h2 className="title">Daily Leader board</h2>
+          <div className="block" style={{overflowY: 'auto',
+maxHeight: '80vh'}}>
             <table>
               <tbody>
                 <tr className="header">
                   <th>Top</th>
                   <th>User</th>
-                  <th>Orders</th>
-                  <th>Success</th>
+                  {/* <th>Orders</th>
+                  <th>Success</th> */}
+                  <th>Correct Tap Count</th>
                 </tr>
                 {users &&
                   users?.map((user, index) => (
@@ -126,13 +140,38 @@ export default function page({}: Props) {
                         </div>{" "}
                         {user.name}
                       </td>
-                      <td>{Intl.NumberFormat().format(user.totalScore)}</td>
-                      <td>{calculateRating(user.tapCount)}%</td>
+                      {/* <td>{Intl.NumberFormat().format(user.totalScore)}</td>
+                      <td>{calculateRating(user.tapCount)}%</td> */}
+                      <td>{user.dailyCorrectTapCount}</td>
                     </tr>
                   ))}
               </tbody>
             </table>
           </div>
+
+
+          <h2 className="title">
+        Daily Winner
+      </h2>
+<div className="contributor grid-2">
+
+     {winners?.map(winner => (
+       <div className="block">
+       <div className="dprofile">
+         <div className="user-profile">
+           <img src={winner.profilePicture || "images/avatar.png"} alt="" />
+         </div>
+         <p>{formatDate(winner.updatedAt)}</p>
+       </div>
+       <div className="body">
+         <h2>{winner.name}</h2>
+         <p>{winner.totalTap}</p>
+       </div>
+     </div>
+     ))}
+</div>
+
+         
         </div>
       </main>
       <Footer />

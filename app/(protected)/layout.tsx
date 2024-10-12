@@ -39,6 +39,7 @@ export default function RootLayout({
               missedTap: data.user.tapCount.missedTap || 0,
               wrongTap: data.user.tapCount.wrongTap || 0,
             },
+            dailyCorrectTapCount: 0
           });
           document.documentElement.style.setProperty(
             "--primary",

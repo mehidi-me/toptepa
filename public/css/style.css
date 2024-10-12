@@ -152,6 +152,11 @@ main.contributor .container {
   gap: 2rem;
 }
 
+.contributor.grid-2{
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
 .block.report {
   padding: 0;
   display: grid;
@@ -478,6 +483,24 @@ main.contributor .container {
   pointer-events: none !important;
 }
 
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  background: var(--secoundary);
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.toggle-btn button {
+  background: transparent;
+  white-space: none;
+  text-wrap: nowrap;
+}
+.toggle-btn button.active {
+  background: var(--primary);
+}
+
 @media (max-width: 660px) {
   .block.report .card p {
     font-size: 1.2rem;
@@ -487,7 +510,13 @@ main.contributor .container {
     gap: 1rem;
     padding: 1.5rem;
   }
-
+  .toggle-btn button {
+   padding: 1rem;
+   font-size: 1.3rem;
+  }
+  .contributor.grid-2{
+    grid-template-columns: 1fr;
+  }
   .block.report .card h2 {
     font-size: 2.3rem;
   }
@@ -501,3 +530,4 @@ main.contributor .container {
     width: 4rem;
   }
 }
+

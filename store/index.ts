@@ -29,6 +29,7 @@ interface TapState {
             missedTap: number
             wrongTap: number
         }
+        dailyCorrectTapCount?: number
         themeColor?: string
     }) => void
 
@@ -46,6 +47,9 @@ interface TapState {
 
     totalScore: number
     setTotalScore: (by: number) => void
+
+    dailyCorrectTapCount: number
+    setDailyCorrectTapCount: (by: number) => void
 
     tapCount: {
         correctTap: number
@@ -83,8 +87,8 @@ const useTapStore = create<TapState>()(
 
             gamePaused: false,
             setGamePaused: (to) => set((state) => {
-                saveToDB(state.totalScore, state.currentLevel, state.tapCount);
-                return ({ gamePaused: to })
+                saveToDB(state.totalScore, state.currentLevel, state.tapCount, state.dailyCorrectTapCount);
+                return ({ gamePaused: to, dailyCorrectTapCount:0 })
             }),
 
             showModal: false,
@@ -98,6 +102,13 @@ const useTapStore = create<TapState>()(
                 // saveToDB(state.totalScore + by, state.currentLevel, state.tapCount)
                 checkForLevelUp()
                 return ({ totalScore: state.totalScore + by })
+            }),
+
+            dailyCorrectTapCount: 0,
+            setDailyCorrectTapCount: (by) => set((state) => {
+                // saveToDB(state.totalScore + by, state.currentLevel, state.tapCount)
+                checkForLevelUp()
+                return ({ dailyCorrectTapCount: state.dailyCorrectTapCount + by })
             }),
 
             tapCount: {
@@ -122,8 +133,8 @@ const useTapStore = create<TapState>()(
 
             currentLevel: "level1",
             setCurrentLevel: (to) => set((state) => {
-                saveToDB(state.totalScore, to, state.tapCount)
-                return ({ currentLevel: to })
+                saveToDB(state.totalScore, to, state.tapCount,state.dailyCorrectTapCount)
+                return ({ currentLevel: to, dailyCorrectTapCount: 0 })
             }),
 
             activeDiv: [],
@@ -135,13 +146,13 @@ const useTapStore = create<TapState>()(
     ),
 )
 
-const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4", tapCount: { correctTap: number, missedTap: number, wrongTap: number }) => {
+const saveToDB = async (totalScore: number, currentLevel: "level1" | "level2" | "level3" | "level4", tapCount: { correctTap: number, missedTap: number, wrongTap: number }, dailyCorrectTapCount: number) => {
     await fetch("/auth/update", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ totalScore, currentLevel, tapCount }),
+        body: JSON.stringify({ totalScore, currentLevel, tapCount, dailyCorrectTapCount}),
     });
 
 }
