@@ -108,7 +108,7 @@ const Home = () => {
         : { byCorrect: 0, byWrong: 1, byMissed: 0 };
     const tapAdjustments2 =
       selectedClient.clientType === "good"
-        ? 1
+        ? 25
         : 0;
 
     setTotalScore(scoreAdjustment);

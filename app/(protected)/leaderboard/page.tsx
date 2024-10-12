@@ -99,8 +99,8 @@ export default function page({}: Props) {
         )}
         <div className="container">
           <div className="toggle-btn">
-                <Link href={'/leaderboard'}><button className="active">Main Leader Board</button></Link>
-                <Link href={'/daily-leaderboard'}><button>Daily Leader Board</button></Link>
+                <a href={'/leaderboard'}><button className="active">Main Leader Board</button></a>
+                <a href={'/daily-leaderboard'}><button>Daily Leader Board</button></a>
             </div>
           <h2 className="title">Main Leader board</h2>
           <div className="block">

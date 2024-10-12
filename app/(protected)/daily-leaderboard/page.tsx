@@ -111,12 +111,12 @@ export default function page({}: Props) {
         )}
         <div className="container">
         <div className="toggle-btn">
-                <Link href={'/leaderboard'}><button>Main Leader Board</button></Link>
-                <Link href={'/daily-leaderboard'} ><button className="active">Daily Leader Board</button></Link>
+                <a href={'/leaderboard'}><button>Main Leader Board</button></a>
+                <a href={'/daily-leaderboard'} ><button className="active">Daily Leader Board</button></a>
             </div>
           <h2 className="title">Daily Leader board</h2>
           <div className="block" style={{overflowY: 'auto',
-maxHeight: '80vh'}}>
+maxHeight: '50vh'}}>
             <table>
               <tbody>
                 <tr className="header">
@@ -124,7 +124,7 @@ maxHeight: '80vh'}}>
                   <th>User</th>
                   {/* <th>Orders</th>
                   <th>Success</th> */}
-                  <th>Correct Tap Count</th>
+                  <th>Earning</th>
                 </tr>
                 {users &&
                   users?.map((user, index) => (
@@ -142,7 +142,7 @@ maxHeight: '80vh'}}>
                       </td>
                       {/* <td>{Intl.NumberFormat().format(user.totalScore)}</td>
                       <td>{calculateRating(user.tapCount)}%</td> */}
-                      <td>{user.dailyCorrectTapCount}</td>
+                      <td>{user.dailyCorrectTapCount}$</td>
                     </tr>
                   ))}
               </tbody>
