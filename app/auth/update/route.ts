@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import User2 from "@/models/User2"; // Using the User2 model
 import { verifyToken } from "@/lib/jwt";
 import { cookies } from "next/headers";
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   // Extract user data from the request
