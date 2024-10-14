@@ -142,7 +142,7 @@ maxHeight: '50vh'}}>
                       </td>
                       {/* <td>{Intl.NumberFormat().format(user.totalScore)}</td>
                       <td>{calculateRating(user.tapCount)}%</td> */}
-                      <td>{user.dailyCorrectTapCount}$</td>
+                      <td>${user.dailyCorrectTapCount}</td>
                     </tr>
                   ))}
               </tbody>
