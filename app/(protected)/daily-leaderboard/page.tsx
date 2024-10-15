@@ -24,8 +24,8 @@ export default function page({}: Props) {
   const [winners, setWinners] = useState<
     {
       id: number;
+      user_id: number;
       name: string;
-      profilePicture: string;
       totalTap: number;
       updatedAt:string
     }[]
@@ -155,20 +155,23 @@ maxHeight: '50vh'}}>
       </h2>
 <div className="contributor grid-2">
 
-     {winners?.map(winner => (
-       <div className="block">
-       <div className="dprofile">
-         <div className="user-profile">
-           <img src={winner.profilePicture || "images/avatar.png"} alt="" />
-         </div>
-         <p>{formatDate(winner.updatedAt)}</p>
-       </div>
-       <div className="body">
-         <h2>{winner.name}</h2>
-         <p>{winner.totalTap}</p>
-       </div>
-     </div>
-     ))}
+     {winners?.map(winner => {
+      const pImage = users.find(user => user.id == winner.user_id)
+      return (
+        <div className="block">
+        <div className="dprofile">
+          <div className="user-profile">
+            <img src={pImage?.profilePicture || "images/avatar.png"} alt="" />
+          </div>
+          <p>{formatDate(winner.updatedAt)}</p>
+        </div>
+        <div className="body">
+          <h2>{winner.name}</h2>
+          <p>{winner.totalTap}</p>
+        </div>
+      </div>
+      )
+     })}
 </div>
 
          

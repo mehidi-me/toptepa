@@ -10,7 +10,9 @@ export async function GET(req: NextRequest) {
         order: [['dailyCorrectTapCount', 'DESC']], // Sort by totalScore in descending order
         limit: 100, // Limit to 100 users
     });
-    const winners = await Winner.findAll({});
+    const winners = await Winner.findAll({
+        attributes: { exclude: ['profilePicture'] }
+    });
 
     if (!users || users.length === 0) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
