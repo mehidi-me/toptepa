@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     fiverrName,
     themeColor,
     profilePicture,
-    dailyCorrectTapCount
+    dailyCorrectTapCount,
   } = await req.json();
 
   // Get token from cookies
@@ -31,17 +31,28 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-
-   const user = await User2.findByPk(decoded.payload.id, {
-        attributes: ['dailyCorrectTapCount']
-    });
-    const dailyCorrectTapCountSum = user?.dailyCorrectTapCount + dailyCorrectTapCount;
+  const user = await User2.findByPk(decoded.payload.id, {
+    attributes: ["dailyCorrectTapCount"],
+  });
+  let dailyCorrectTapCountSum = user?.dailyCorrectTapCount;
+  if (dailyCorrectTapCount) {
+    dailyCorrectTapCountSum = user?.dailyCorrectTapCount + dailyCorrectTapCount;
+  }
 
   // Update user data in the database using Sequelize
   const [affectedCount] = await User2.update(
-    { totalScore, currentLevel, tapCount, name, fiverrName, themeColor, profilePicture, dailyCorrectTapCount: dailyCorrectTapCountSum },
     {
-      where: { id: decoded.payload.id } // Use Sequelize's where clause to find the user by ID
+      totalScore,
+      currentLevel,
+      tapCount,
+      name,
+      fiverrName,
+      themeColor,
+      profilePicture,
+      dailyCorrectTapCount: dailyCorrectTapCountSum,
+    },
+    {
+      where: { id: decoded.payload.id }, // Use Sequelize's where clause to find the user by ID
     }
   );
 
