@@ -12,6 +12,32 @@ export default function page({}: Props) {
           <div className="block">
             <div className="header">
               <div className="flex">
+                <p>🏆 Fiverr Official Contest 🏆 </p>
+                {/* <h3>24.09.2024</h3> */}
+              </div>
+            </div>
+            <div className="body">
+              <p style={{fontSize:'1.6rem'}}>
+              Think you’ve got what it takes to be Freelancer of the Year? Want to spotlight your Verified Human Talent?
+<br />
+<br />
+We’re here to help you celebrate International Freelance Day in style with our new social filters. For Fiverr freelancers, all you have to do is upload a photo of yourself and choose one of six unique filters that showcase the freelance lifestyle. When you're done, it's easy to share your results on social media!
+<br />
+<br />
+10 winners from the contest will be selected to appear in Fiverr ads across the globe, directing traffic directly to your profile. Submissions run from October 15 at 9 am EST through October 22 at midnight EST. 
+<br />
+<br />
+Click the link to get started: <a style={{color:'var(--primary)',fontWeight:'bold'}} href="https://fvrr.co/4dTsJzj" target="_blank" rel="noopener noreferrer">https://fvrr.co/4dTsJzj</a>
+<br />
+<br />
+* terms and conditions apply
+              </p>
+              {/* <button>Get Rush Time</button> */}
+            </div>
+          </div>
+          <div className="block">
+            <div className="header">
+              <div className="flex">
                 <p>🏆 টপ টেপা গেম - ডেইলি কন্টেস্ট 🏆 </p>
                 {/* <h3>24.09.2024</h3> */}
               </div>
