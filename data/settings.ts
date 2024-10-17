@@ -75,7 +75,7 @@ const settings = {
             icon: Level4,
             totalClient: 50,
             client2Count: 15,
-            client3Count: 0,
+            client3Count: 30,
             clientDuration: 1150,
             nextLevelScore: 1000000000000000,
             nextLevelTap: 97,
